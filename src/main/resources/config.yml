@@ -1,0 +1,230 @@
+challengeCounts:
+  group1: 5
+  group2: 7
+  group3: 10
+
+skipLimits:
+  group1: 1
+  group2: 2
+  group3: 3
+
+templates:
+  group1:
+    break_stone:
+      title: "&7Steinbruch"
+      description: "Baue verschiedene Blöcke ab"
+      type: "BREAK_BLOCK"
+      baseTarget: 128
+      targetPerTier: 42
+      baseTokens: 6
+      tokenPerTier: 2
+      skippable: true
+    ore_hunt:
+      title: "&bErzjäger"
+      description: "Finde und baue Erze ab"
+      type: "MINE_ORE"
+      baseTarget: 18
+      targetPerTier: 6
+      baseTokens: 9
+      tokenPerTier: 3
+      skippable: true
+    mob_slayer:
+      title: "&cMonsterjäger"
+      description: "Besiege feindliche Mobs"
+      type: "KILL_MOB"
+      baseTarget: 22
+      targetPerTier: 8
+      baseTokens: 10
+      tokenPerTier: 3
+      skippable: true
+    fisher:
+      title: "&9Fischertrupp"
+      description: "Fange Fische und Schätze"
+      type: "FISH"
+      baseTarget: 9
+      targetPerTier: 3
+      baseTokens: 8
+      tokenPerTier: 2
+      skippable: true
+    crafter:
+      title: "&eWerkbank-Legende"
+      description: "Crafte nützliche Items"
+      type: "CRAFT"
+      baseTarget: 20
+      targetPerTier: 7
+      baseTokens: 7
+      tokenPerTier: 2
+      skippable: true
+    breeder:
+      title: "&dTierfarm"
+      description: "Züchte Tiere"
+      type: "BREED"
+      baseTarget: 8
+      targetPerTier: 3
+      baseTokens: 8
+      tokenPerTier: 2
+      skippable: true
+    smelter:
+      title: "&6Hochofen-Shift"
+      description: "Schmelze Erze oder Nahrung"
+      type: "SMELT"
+      baseTarget: 32
+      targetPerTier: 11
+      baseTokens: 7
+      tokenPerTier: 2
+      skippable: true
+  group2:
+    long_walk:
+      title: "&aErkundungstrupp"
+      description: "Lege Distanz zu Fuß zurück"
+      type: "WALK_DISTANCE"
+      baseTarget: 1400
+      targetPerTier: 320
+      baseTokens: 15
+      tokenPerTier: 4
+      skippable: true
+    trader:
+      title: "&2Markthandel"
+      description: "Handle mit Dorfbewohnern"
+      type: "TRADE_VILLAGER"
+      baseTarget: 18
+      targetPerTier: 5
+      baseTokens: 17
+      tokenPerTier: 5
+      skippable: true
+    weekly_miner:
+      title: "&8Schichtleiter"
+      description: "Abbauleistung in dieser Gruppe"
+      type: "BREAK_BLOCK"
+      baseTarget: 980
+      targetPerTier: 230
+      baseTokens: 16
+      tokenPerTier: 4
+      skippable: true
+    weekly_ore:
+      title: "&3Tiefenschürfer"
+      description: "Erzquote für diese Gruppe"
+      type: "MINE_ORE"
+      baseTarget: 74
+      targetPerTier: 22
+      baseTokens: 20
+      tokenPerTier: 5
+      skippable: false
+    weekly_hunter:
+      title: "&4Kriegerbund"
+      description: "Jage viele Mobs in dieser Gruppe"
+      type: "KILL_MOB"
+      baseTarget: 80
+      targetPerTier: 20
+      baseTokens: 18
+      tokenPerTier: 5
+      skippable: true
+    weekly_smelter:
+      title: "&6Produktionslinie"
+      description: "Verarbeite große Mengen"
+      type: "SMELT"
+      baseTarget: 180
+      targetPerTier: 40
+      baseTokens: 16
+      tokenPerTier: 4
+      skippable: true
+    weekly_crafter:
+      title: "&eIngenieursprojekt"
+      description: "Crafte umfangreich in dieser Gruppe"
+      type: "CRAFT"
+      baseTarget: 140
+      targetPerTier: 35
+      baseTokens: 17
+      tokenPerTier: 4
+      skippable: true
+  group3:
+    monthly_master_miner:
+      title: "&7Minenboss"
+      description: "Massiver Blockabbau in dieser Gruppe"
+      type: "BREAK_BLOCK"
+      baseTarget: 7800
+      targetPerTier: 1100
+      baseTokens: 60
+      tokenPerTier: 10
+      skippable: false
+    monthly_ore_emperor:
+      title: "&bErzkaiser"
+      description: "Extremer Erzfortschritt"
+      type: "MINE_ORE"
+      baseTarget: 460
+      targetPerTier: 85
+      baseTokens: 80
+      tokenPerTier: 12
+      skippable: false
+    monthly_champion:
+      title: "&cArena-Champion"
+      description: "Besiege viele Mobs"
+      type: "KILL_MOB"
+      baseTarget: 520
+      targetPerTier: 90
+      baseTokens: 75
+      tokenPerTier: 11
+      skippable: true
+    monthly_builder:
+      title: "&eBaumeisterpakt"
+      description: "Großes Ziel für Crafting"
+      type: "CRAFT"
+      baseTarget: 900
+      targetPerTier: 150
+      baseTokens: 70
+      tokenPerTier: 10
+      skippable: true
+    monthly_farmer:
+      title: "&dFarm-Imperium"
+      description: "Große Zuchtleistung"
+      type: "BREED"
+      baseTarget: 280
+      targetPerTier: 60
+      baseTokens: 72
+      tokenPerTier: 10
+      skippable: true
+    monthly_industry:
+      title: "&6Industriekomplex"
+      description: "Schmelze auf Gruppen-Niveau"
+      type: "SMELT"
+      baseTarget: 2200
+      targetPerTier: 420
+      baseTokens: 68
+      tokenPerTier: 10
+      skippable: true
+    monthly_explorer:
+      title: "&aKartograph"
+      description: "Lange Erkundungstouren"
+      type: "WALK_DISTANCE"
+      baseTarget: 18000
+      targetPerTier: 2600
+      baseTokens: 65
+      tokenPerTier: 9
+      skippable: true
+    monthly_merchant:
+      title: "&2Handelsdynastie"
+      description: "Regelmäßiger Villager-Handel"
+      type: "TRADE_VILLAGER"
+      baseTarget: 260
+      targetPerTier: 55
+      baseTokens: 70
+      tokenPerTier: 10
+      skippable: true
+    monthly_angler:
+      title: "&9Großfischer"
+      description: "Fange über diese Gruppe hinweg"
+      type: "FISH"
+      baseTarget: 210
+      targetPerTier: 48
+      baseTokens: 62
+      tokenPerTier: 9
+      skippable: true
+    monthly_arcane:
+      title: "&5Arkanes Projekt"
+      description: "Nutze Verzauberungen"
+      type: "ENCHANT"
+      baseTarget: 120
+      targetPerTier: 28
+      baseTokens: 64
+      tokenPerTier: 9
+      skippable: true
