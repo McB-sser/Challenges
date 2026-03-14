@@ -23,6 +23,7 @@ import java.util.List;
 public class ChallengeScoreboardService {
 
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("dd.MM HH:mm");
+    private static final String OBJECTIVE_NAME = "challenges";
 
     private final JavaPlugin plugin;
     private final ChallengeService challengeService;
@@ -66,7 +67,7 @@ public class ChallengeScoreboardService {
 
     public void hide(Player player) {
         ScoreboardManager manager = Bukkit.getScoreboardManager();
-        if (manager != null) {
+        if (manager != null && isShowingOwnBoard(player)) {
             player.setScoreboard(manager.getMainScoreboard());
         }
     }
@@ -85,7 +86,7 @@ public class ChallengeScoreboardService {
         PlayerProgress progress = challengeService.getProgress(player.getUniqueId());
         ChallengePeriod period = challengeService.visibleGroup(player.getUniqueId());
         Scoreboard scoreboard = manager.getNewScoreboard();
-        Objective objective = scoreboard.registerNewObjective("challenges", "dummy",
+        Objective objective = scoreboard.registerNewObjective(OBJECTIVE_NAME, "dummy",
                 ChatColor.GOLD + "" + ChatColor.BOLD + "Challenges");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 
@@ -96,6 +97,11 @@ public class ChallengeScoreboardService {
         }
 
         player.setScoreboard(scoreboard);
+    }
+
+    private boolean isShowingOwnBoard(Player player) {
+        Scoreboard scoreboard = player.getScoreboard();
+        return scoreboard != null && scoreboard.getObjective(OBJECTIVE_NAME) != null;
     }
 
     private List<String> buildLines(PlayerProgress progress, ChallengePeriod period) {
