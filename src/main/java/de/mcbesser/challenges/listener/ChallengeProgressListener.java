@@ -2,6 +2,7 @@ package de.mcbesser.challenges.listener;
 
 import de.mcbesser.challenges.model.ChallengeType;
 import de.mcbesser.challenges.service.ChallengeService;
+import de.mcbesser.challenges.service.ChallengeScoreboardService;
 import de.mcbesser.challenges.service.MenuItemService;
 import de.mcbesser.challenges.service.ShopService;
 import org.bukkit.Bukkit;
@@ -50,14 +51,18 @@ public class ChallengeProgressListener implements Listener {
     );
 
     private final ChallengeService challengeService;
+    private final ChallengeScoreboardService scoreboardService;
     private final MenuItemService menuItemService;
     private final ShopService shopService;
     private final JavaPlugin plugin;
     private final Map<UUID, Double> walkedDistanceBuffer = new ConcurrentHashMap<>();
 
-    public ChallengeProgressListener(JavaPlugin plugin, ChallengeService challengeService, MenuItemService menuItemService, ShopService shopService) {
+    public ChallengeProgressListener(JavaPlugin plugin, ChallengeService challengeService,
+                                     ChallengeScoreboardService scoreboardService,
+                                     MenuItemService menuItemService, ShopService shopService) {
         this.plugin = plugin;
         this.challengeService = challengeService;
+        this.scoreboardService = scoreboardService;
         this.menuItemService = menuItemService;
         this.shopService = shopService;
     }
@@ -73,6 +78,7 @@ public class ChallengeProgressListener implements Listener {
         if (ORES.contains(event.getBlock().getType())) {
             challengeService.addProgress(player, ChallengeType.MINE_ORE, 1);
         }
+        scoreboardService.refresh(player);
     }
 
     @EventHandler
@@ -88,6 +94,7 @@ public class ChallengeProgressListener implements Listener {
             return;
         }
         challengeService.addProgress(player, ChallengeType.KILL_MOB, 1);
+        scoreboardService.refresh(player);
     }
 
     @EventHandler
@@ -97,6 +104,7 @@ public class ChallengeProgressListener implements Listener {
                 return;
             }
             challengeService.addProgress(event.getPlayer(), ChallengeType.FISH, 1);
+            scoreboardService.refresh(event.getPlayer());
         }
     }
 
@@ -120,6 +128,7 @@ public class ChallengeProgressListener implements Listener {
                 int delta = Math.max(0, after - before);
                 if (delta > 0) {
                     challengeService.addProgress(player, ChallengeType.CRAFT, delta);
+                    scoreboardService.refresh(player);
                 }
             }, 1L);
         }
@@ -133,6 +142,7 @@ public class ChallengeProgressListener implements Listener {
                 return;
             }
             challengeService.addProgress(player, ChallengeType.BREED, 1);
+            scoreboardService.refresh(player);
         }
     }
 
@@ -142,6 +152,7 @@ public class ChallengeProgressListener implements Listener {
             return;
         }
         challengeService.addProgress(event.getPlayer(), ChallengeType.SMELT, event.getItemAmount());
+        scoreboardService.refresh(event.getPlayer());
     }
 
     @EventHandler
@@ -150,6 +161,7 @@ public class ChallengeProgressListener implements Listener {
             return;
         }
         challengeService.addProgress(event.getEnchanter(), ChallengeType.ENCHANT, 1);
+        scoreboardService.refresh(event.getEnchanter());
     }
 
     @EventHandler
@@ -180,6 +192,7 @@ public class ChallengeProgressListener implements Listener {
         int wholeBlocks = (int) total;
         if (wholeBlocks > 0) {
             challengeService.addProgress(event.getPlayer(), ChallengeType.WALK_DISTANCE, wholeBlocks);
+            scoreboardService.refresh(event.getPlayer());
             total -= wholeBlocks;
         }
         walkedDistanceBuffer.put(uuid, total);
@@ -240,6 +253,7 @@ public class ChallengeProgressListener implements Listener {
             int resultItems = Math.max(1, recipe.getResult().getAmount() * tradesDone);
             if (resultItems > 0) {
                 challengeService.addProgress(player, ChallengeType.TRADE_VILLAGER, resultItems);
+                scoreboardService.refresh(player);
             }
         }, 1L);
     }

@@ -368,6 +368,14 @@ public class ChallengeService {
         };
     }
 
+    public String shortPeriodName(ChallengePeriod group) {
+        return switch (group) {
+            case GROUP_1 -> "G1";
+            case GROUP_2 -> "G2";
+            case GROUP_3 -> "G3";
+        };
+    }
+
     public LocalDateTime getEndTime(UUID playerId, ChallengePeriod group) {
         return getProgress(playerId).getExpiresAt();
     }
