@@ -1,26 +1,28 @@
 package de.mcbesser.challenges.listener;
 
 import de.mcbesser.challenges.model.ChallengeType;
-import de.mcbesser.challenges.service.ChallengeService;
 import de.mcbesser.challenges.service.ChallengeScoreboardService;
+import de.mcbesser.challenges.service.ChallengeService;
 import de.mcbesser.challenges.service.MenuItemService;
 import de.mcbesser.challenges.service.ShopService;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Animals;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityBreedEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.FurnaceExtractEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -38,6 +40,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ChallengeProgressListener implements Listener {
 
+    private static final Set<Material> STONE_BLOCKS = EnumSet.of(
+            Material.STONE, Material.COBBLESTONE,
+            Material.DEEPSLATE, Material.COBBLED_DEEPSLATE,
+            Material.GRANITE, Material.DIORITE, Material.ANDESITE,
+            Material.TUFF, Material.CALCITE,
+            Material.BLACKSTONE, Material.BASALT
+    );
+
     private static final Set<Material> ORES = EnumSet.of(
             Material.COAL_ORE, Material.DEEPSLATE_COAL_ORE,
             Material.IRON_ORE, Material.DEEPSLATE_IRON_ORE,
@@ -48,6 +58,26 @@ public class ChallengeProgressListener implements Listener {
             Material.DIAMOND_ORE, Material.DEEPSLATE_DIAMOND_ORE,
             Material.EMERALD_ORE, Material.DEEPSLATE_EMERALD_ORE,
             Material.NETHER_QUARTZ_ORE, Material.NETHER_GOLD_ORE, Material.ANCIENT_DEBRIS
+    );
+
+    private static final Set<Material> LANDSCAPING_BLOCKS = EnumSet.of(
+            Material.DIRT, Material.COARSE_DIRT, Material.ROOTED_DIRT,
+            Material.GRASS_BLOCK, Material.PODZOL, Material.MYCELIUM,
+            Material.DIRT_PATH, Material.FARMLAND,
+            Material.MUD, Material.CLAY,
+            Material.SAND, Material.RED_SAND, Material.GRAVEL
+    );
+
+    private static final Set<Material> PLANTABLE_BLOCKS = EnumSet.of(
+            Material.WHEAT, Material.CARROTS, Material.POTATOES, Material.BEETROOTS,
+            Material.NETHER_WART, Material.TORCHFLOWER_CROP, Material.PITCHER_CROP,
+            Material.MELON_STEM, Material.ATTACHED_MELON_STEM,
+            Material.PUMPKIN_STEM, Material.ATTACHED_PUMPKIN_STEM,
+            Material.SUGAR_CANE, Material.CACTUS, Material.BAMBOO,
+            Material.SWEET_BERRY_BUSH, Material.COCOA,
+            Material.OAK_SAPLING, Material.SPRUCE_SAPLING, Material.BIRCH_SAPLING,
+            Material.JUNGLE_SAPLING, Material.ACACIA_SAPLING, Material.DARK_OAK_SAPLING,
+            Material.CHERRY_SAPLING, Material.MANGROVE_PROPAGULE
     );
 
     private final ChallengeService challengeService;
@@ -74,10 +104,37 @@ public class ChallengeProgressListener implements Listener {
         if (!menuItemService.hasMenuItemInInventory(player)) {
             return;
         }
-        challengeService.addProgress(player, ChallengeType.BREAK_BLOCK, 1);
-        if (ORES.contains(event.getBlock().getType())) {
-            challengeService.addProgress(player, ChallengeType.MINE_ORE, 1);
+
+        boolean updated = false;
+        Material blockType = event.getBlock().getType();
+        if (STONE_BLOCKS.contains(blockType)) {
+            challengeService.addProgress(player, ChallengeType.MINE_STONE, 1);
+            updated = true;
         }
+        if (ORES.contains(blockType)) {
+            challengeService.addProgress(player, ChallengeType.MINE_ORE, 1);
+            updated = true;
+        }
+        if (LANDSCAPING_BLOCKS.contains(blockType) || isHarvestedPlant(event)) {
+            challengeService.addProgress(player, ChallengeType.LANDSCAPING, 1);
+            updated = true;
+        }
+        if (updated) {
+            scoreboardService.refresh(player);
+        }
+    }
+
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event) {
+        Player player = event.getPlayer();
+        if (!menuItemService.hasMenuItemInInventory(player)) {
+            return;
+        }
+        Material blockType = event.getBlockPlaced().getType();
+        if (!LANDSCAPING_BLOCKS.contains(blockType) && !PLANTABLE_BLOCKS.contains(blockType)) {
+            return;
+        }
+        challengeService.addProgress(player, ChallengeType.LANDSCAPING, 1);
         scoreboardService.refresh(player);
     }
 
@@ -110,8 +167,7 @@ public class ChallengeProgressListener implements Listener {
 
     @EventHandler
     public void onCraft(CraftItemEvent event) {
-        if (event.getWhoClicked() instanceof Player) {
-            Player player = (Player) event.getWhoClicked();
+        if (event.getWhoClicked() instanceof Player player) {
             if (!menuItemService.hasMenuItemInInventory(player)) {
                 return;
             }
@@ -136,8 +192,7 @@ public class ChallengeProgressListener implements Listener {
 
     @EventHandler
     public void onBreed(EntityBreedEvent event) {
-        if (event.getBreeder() instanceof Player && event.getEntity() instanceof Animals) {
-            Player player = (Player) event.getBreeder();
+        if (event.getBreeder() instanceof Player player && event.getEntity() instanceof Animals) {
             if (!menuItemService.hasMenuItemInInventory(player)) {
                 return;
             }
@@ -219,9 +274,10 @@ public class ChallengeProgressListener implements Listener {
         if (!menuItemService.hasMenuItemInInventory(player)) {
             return;
         }
-        if (!(event.getView().getTopInventory() instanceof MerchantInventory merchantInventory)) {
+        if (!(event.getView().getTopInventory() instanceof MerchantInventory)) {
             return;
         }
+        MerchantInventory merchantInventory = (MerchantInventory) event.getView().getTopInventory();
         if (event.getSlotType() != InventoryType.SlotType.RESULT || event.getRawSlot() != 2) {
             return;
         }
@@ -315,5 +371,17 @@ public class ChallengeProgressListener implements Listener {
             total += cursor.getAmount();
         }
         return total;
+    }
+
+    private boolean isHarvestedPlant(BlockBreakEvent event) {
+        Material type = event.getBlock().getType();
+        if (!PLANTABLE_BLOCKS.contains(type)) {
+            return false;
+        }
+        if (!(event.getBlock().getBlockData() instanceof Ageable)) {
+            return true;
+        }
+        Ageable ageable = (Ageable) event.getBlock().getBlockData();
+        return ageable.getAge() >= ageable.getMaximumAge();
     }
 }

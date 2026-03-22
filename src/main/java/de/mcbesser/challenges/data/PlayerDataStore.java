@@ -93,7 +93,7 @@ public class PlayerDataStore {
                                 asString(row.get("templateId")),
                                 asString(row.get("title")),
                                 asString(row.get("description")),
-                                ChallengeType.valueOf(asString(row.get("type"))),
+                                parseChallengeType(asString(row.get("type"))),
                                 period,
                                 asInt(row.get("target"), 1),
                                 asInt(row.get("tokenReward"), 1),
@@ -180,5 +180,15 @@ public class PlayerDataStore {
             return (Boolean) value;
         }
         return fallback;
+    }
+
+    private ChallengeType parseChallengeType(String rawType) {
+        if (rawType == null || rawType.isBlank()) {
+            return ChallengeType.MINE_STONE;
+        }
+        if ("BREAK_BLOCK".equalsIgnoreCase(rawType)) {
+            return ChallengeType.MINE_STONE;
+        }
+        return ChallengeType.valueOf(rawType.toUpperCase());
     }
 }

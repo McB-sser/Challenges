@@ -12,15 +12,15 @@ templates:
   group1:
     break_stone:
       title: "&7Steinbruch"
-      description: "Baue verschiedene Blöcke ab"
-      type: "BREAK_BLOCK"
+      description: "Baue Steinbloecke ab"
+      type: "MINE_STONE"
       baseTarget: 128
       targetPerTier: 42
       baseTokens: 6
       tokenPerTier: 2
       skippable: true
     ore_hunt:
-      title: "&bErzjäger"
+      title: "&bErzjaeger"
       description: "Finde und baue Erze ab"
       type: "MINE_ORE"
       baseTarget: 18
@@ -29,8 +29,8 @@ templates:
       tokenPerTier: 3
       skippable: true
     mob_slayer:
-      title: "&cMonsterjäger"
-      description: "Besiege feindliche Mobs"
+      title: "&cMobjaeger"
+      description: "Besiege beliebige Mobs"
       type: "KILL_MOB"
       baseTarget: 22
       targetPerTier: 8
@@ -39,7 +39,7 @@ templates:
       skippable: true
     fisher:
       title: "&9Fischertrupp"
-      description: "Fange Fische und Schätze"
+      description: "Fange Fische und Schaetze"
       type: "FISH"
       baseTarget: 9
       targetPerTier: 3
@@ -48,7 +48,7 @@ templates:
       skippable: true
     crafter:
       title: "&eWerkbank-Legende"
-      description: "Crafte nützliche Items"
+      description: "Crafte nuetzliche Items"
       type: "CRAFT"
       baseTarget: 20
       targetPerTier: 7
@@ -57,7 +57,7 @@ templates:
       skippable: true
     breeder:
       title: "&dTierfarm"
-      description: "Züchte Tiere"
+      description: "Zuechte Tiere"
       type: "BREED"
       baseTarget: 8
       targetPerTier: 3
@@ -73,10 +73,19 @@ templates:
       baseTokens: 7
       tokenPerTier: 2
       skippable: true
+    landscaping:
+      title: "&2Land- und Gartenbau"
+      description: "Baue Erde ab, setze Bloecke oder pflanze und ernte"
+      type: "LANDSCAPING"
+      baseTarget: 40
+      targetPerTier: 14
+      baseTokens: 8
+      tokenPerTier: 2
+      skippable: true
   group2:
     long_walk:
       title: "&aErkundungstrupp"
-      description: "Lege Distanz zu Fuß zurück"
+      description: "Lege Distanz zu Fuss zurueck"
       type: "WALK_DISTANCE"
       baseTarget: 1400
       targetPerTier: 320
@@ -94,16 +103,16 @@ templates:
       skippable: true
     weekly_miner:
       title: "&8Schichtleiter"
-      description: "Abbauleistung in dieser Gruppe"
-      type: "BREAK_BLOCK"
+      description: "Steinabbau in dieser Gruppe"
+      type: "MINE_STONE"
       baseTarget: 980
       targetPerTier: 230
       baseTokens: 16
       tokenPerTier: 4
       skippable: true
     weekly_ore:
-      title: "&3Tiefenschürfer"
-      description: "Erzquote für diese Gruppe"
+      title: "&3Tiefenschuerfer"
+      description: "Erzquote fuer diese Gruppe"
       type: "MINE_ORE"
       baseTarget: 74
       targetPerTier: 22
@@ -112,7 +121,7 @@ templates:
       skippable: false
     weekly_hunter:
       title: "&4Kriegerbund"
-      description: "Jage viele Mobs in dieser Gruppe"
+      description: "Besiege viele Mobs in dieser Gruppe"
       type: "KILL_MOB"
       baseTarget: 80
       targetPerTier: 20
@@ -121,7 +130,7 @@ templates:
       skippable: true
     weekly_smelter:
       title: "&6Produktionslinie"
-      description: "Verarbeite große Mengen"
+      description: "Verarbeite grosse Mengen"
       type: "SMELT"
       baseTarget: 180
       targetPerTier: 40
@@ -137,11 +146,20 @@ templates:
       baseTokens: 17
       tokenPerTier: 4
       skippable: true
+    weekly_landscaper:
+      title: "&2Gruenflaechen-Team"
+      description: "Land- und Gartenarbeit in dieser Gruppe"
+      type: "LANDSCAPING"
+      baseTarget: 260
+      targetPerTier: 55
+      baseTokens: 16
+      tokenPerTier: 4
+      skippable: true
   group3:
     monthly_master_miner:
       title: "&7Minenboss"
-      description: "Massiver Blockabbau in dieser Gruppe"
-      type: "BREAK_BLOCK"
+      description: "Massiver Steinabbau in dieser Gruppe"
+      type: "MINE_STONE"
       baseTarget: 7800
       targetPerTier: 1100
       baseTokens: 60
@@ -158,7 +176,7 @@ templates:
       skippable: false
     monthly_champion:
       title: "&cArena-Champion"
-      description: "Besiege viele Mobs"
+      description: "Besiege viele beliebige Mobs"
       type: "KILL_MOB"
       baseTarget: 520
       targetPerTier: 90
@@ -167,7 +185,7 @@ templates:
       skippable: true
     monthly_builder:
       title: "&eBaumeisterpakt"
-      description: "Großes Ziel für Crafting"
+      description: "Grosses Ziel fuer Crafting"
       type: "CRAFT"
       baseTarget: 900
       targetPerTier: 150
@@ -176,7 +194,7 @@ templates:
       skippable: true
     monthly_farmer:
       title: "&dFarm-Imperium"
-      description: "Große Zuchtleistung"
+      description: "Grosse Zuchtleistung"
       type: "BREED"
       baseTarget: 280
       targetPerTier: 60
@@ -203,7 +221,7 @@ templates:
       skippable: true
     monthly_merchant:
       title: "&2Handelsdynastie"
-      description: "Regelmäßiger Villager-Handel"
+      description: "Regelmaessiger Villager-Handel"
       type: "TRADE_VILLAGER"
       baseTarget: 260
       targetPerTier: 55
@@ -211,8 +229,8 @@ templates:
       tokenPerTier: 10
       skippable: true
     monthly_angler:
-      title: "&9Großfischer"
-      description: "Fange über diese Gruppe hinweg"
+      title: "&9Grossfischer"
+      description: "Fange ueber diese Gruppe hinweg"
       type: "FISH"
       baseTarget: 210
       targetPerTier: 48
@@ -227,4 +245,13 @@ templates:
       targetPerTier: 28
       baseTokens: 64
       tokenPerTier: 9
+      skippable: true
+    monthly_landscaper:
+      title: "&2Terra-Architekt"
+      description: "Grosse Ziele fuer Land- und Gartenbau"
+      type: "LANDSCAPING"
+      baseTarget: 1800
+      targetPerTier: 320
+      baseTokens: 66
+      tokenPerTier: 10
       skippable: true

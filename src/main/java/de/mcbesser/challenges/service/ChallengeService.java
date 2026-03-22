@@ -118,7 +118,7 @@ public class ChallengeService {
                             id,
                             ChatColor.translateAlternateColorCodes('&', row.getString("title", id)),
                             ChatColor.translateAlternateColorCodes('&', row.getString("description", "")),
-                            ChallengeType.valueOf(row.getString("type", "BREAK_BLOCK")),
+                            parseChallengeType(row.getString("type", "MINE_STONE")),
                             row.getInt("baseTarget", 10),
                             row.getInt("targetPerTier", 5),
                             0,
@@ -174,7 +174,7 @@ public class ChallengeService {
                 player.sendMessage(ChatColor.RED + "Kontingent abgelaufen. Stufe -" + loss
                         + ", neue Stufe: " + progress.getGroupTier() + ".");
             } else {
-                player.sendMessage(ChatColor.RED + "Kontingent abgelaufen. Gruppenfortschritt zurückgesetzt.");
+                player.sendMessage(ChatColor.RED + "Kontingent abgelaufen. Gruppenfortschritt zurueckgesetzt.");
             }
         }
     }
@@ -256,7 +256,7 @@ public class ChallengeService {
         } else {
             progress.setCurrentGroup(progress.getCurrentGroup() + 1);
             player.sendMessage(ChatColor.GOLD + "Gruppe abgeschlossen: " + periodName(group)
-                    + ChatColor.GRAY + " | Nächste Gruppe freigeschaltet.");
+                    + ChatColor.GRAY + " | Naechste Gruppe freigeschaltet.");
         }
     }
 
@@ -382,16 +382,27 @@ public class ChallengeService {
 
     public String challengeHowTo(PlayerChallenge challenge) {
         return switch (challenge.getType()) {
-            case BREAK_BLOCK -> "Baue beliebige Blöcke in Survival ab.";
-            case MINE_ORE -> "Baue echte Erzblöcke wie Kohle, Eisen, Diamant.";
-            case KILL_MOB -> "Besiege feindliche Mobs mit dem finalen Treffer.";
-            case FISH -> "Fange mit der Angel (nur gefangene Fische zählen).";
+            case MINE_STONE -> "Baue Steinbloecke wie Stein, Bruchstein oder Tiefenschiefer ab.";
+            case MINE_ORE -> "Baue echte Erzbloecke wie Kohle, Eisen, Diamant.";
+            case KILL_MOB -> "Besiege beliebige Mobs mit dem finalen Treffer.";
+            case LANDSCAPING -> "Baue Erde ab, setze passende Bloecke oder pflanze und ernte Nutzpflanzen.";
+            case FISH -> "Fange mit der Angel (nur gefangene Fische zaehlen).";
             case CRAFT -> "Stelle echte Items an Werkbank oder Inventar her.";
-            case BREED -> "Züchte Tiere mit passendem Futter.";
+            case BREED -> "Zuechte Tiere mit passendem Futter.";
             case SMELT -> "Entnimm geschmolzene Items aus dem Ofen.";
-            case ENCHANT -> "Verzaubere Gegenstände am Zaubertisch.";
-            case WALK_DISTANCE -> "Bewege dich zu Fuß, schwimmend oder fliegend durch die Welt.";
-            case TRADE_VILLAGER -> "Schließe echte Villager-Handel ab.";
+            case ENCHANT -> "Verzaubere Gegenstaende am Zaubertisch.";
+            case WALK_DISTANCE -> "Bewege dich zu Fuss, schwimmend oder fliegend durch die Welt.";
+            case TRADE_VILLAGER -> "Schliesse echte Villager-Handel ab.";
         };
+    }
+
+    private ChallengeType parseChallengeType(String rawType) {
+        if (rawType == null || rawType.isBlank()) {
+            return ChallengeType.MINE_STONE;
+        }
+        if ("BREAK_BLOCK".equalsIgnoreCase(rawType)) {
+            return ChallengeType.MINE_STONE;
+        }
+        return ChallengeType.valueOf(rawType.toUpperCase());
     }
 }

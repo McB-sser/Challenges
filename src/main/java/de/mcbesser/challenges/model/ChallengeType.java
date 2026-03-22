@@ -1,9 +1,10 @@
 package de.mcbesser.challenges.model;
 
 public enum ChallengeType {
-    BREAK_BLOCK,
+    MINE_STONE,
     MINE_ORE,
     KILL_MOB,
+    LANDSCAPING,
     FISH,
     CRAFT,
     BREED,
