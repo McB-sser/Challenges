@@ -43,7 +43,7 @@ public class MenuItemService {
                 ChatColor.GRAY + "Rechtsklick:",
                 ChatColor.AQUA + "Menü öffnen"
         ));
-        meta.addEnchant(Enchantment.LUCK, 1, true);
+        meta.addEnchant(Enchantment.UNBREAKING, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.getPersistentDataContainer().set(itemIdKey, PersistentDataType.STRING, MENU_ITEM_ID);
         item.setItemMeta(meta);

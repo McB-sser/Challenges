@@ -493,25 +493,25 @@ public class ShopService {
 
         // Positive Effekte
         list.add(toggleEffect("eff_speed_1", Material.SUGAR, "Tempo I", "Schneller laufen", 6, 1, 1800, PotionEffectType.SPEED, 0));
-        list.add(toggleEffect("eff_haste_1", Material.GOLDEN_PICKAXE, "Eile I", "Schneller abbauen", 8, 1, 1800, PotionEffectType.FAST_DIGGING, 0));
-        list.add(toggleEffect("eff_jump_1", Material.RABBIT_FOOT, "Sprungkraft I", "Höher springen", 8, 1, 1800, PotionEffectType.JUMP, 0));
+        list.add(toggleEffect("eff_haste_1", Material.GOLDEN_PICKAXE, "Eile I", "Schneller abbauen", 8, 1, 1800, PotionEffectType.HASTE, 0));
+        list.add(toggleEffect("eff_jump_1", Material.RABBIT_FOOT, "Sprungkraft I", "Höher springen", 8, 1, 1800, PotionEffectType.JUMP_BOOST, 0));
         list.add(toggleEffect("eff_night", Material.ENDER_EYE, "Nachtsicht", "Klares Sehen im Dunkeln", 9, 1, 2400, PotionEffectType.NIGHT_VISION, 0));
         list.add(toggleEffect("eff_water", Material.TURTLE_HELMET, "Wasseratmung", "Länger unter Wasser", 10, 2, 1800, PotionEffectType.WATER_BREATHING, 0));
         list.add(toggleEffect("eff_fire", Material.MAGMA_CREAM, "Feuerresistenz", "Schutz vor Feuer und Lava", 12, 2, 1500, PotionEffectType.FIRE_RESISTANCE, 0));
         list.add(toggleEffect("eff_luck", Material.RABBIT_FOOT, "Glück I", "Mehr Glück bei Beute", 11, 2, 1500, PotionEffectType.LUCK, 0));
         list.add(toggleEffect("eff_regen", Material.GLISTERING_MELON_SLICE, "Regeneration I", "Lebensregeneration", 14, 3, 900, PotionEffectType.REGENERATION, 0));
-        list.add(toggleEffect("eff_strength", Material.BLAZE_POWDER, "Stärke I", "Mehr Nahkampfschaden", 14, 3, 900, PotionEffectType.INCREASE_DAMAGE, 0));
-        list.add(toggleEffect("eff_res", Material.SHIELD, "Resistenz I", "Weniger Schaden", 18, 3, 1200, PotionEffectType.DAMAGE_RESISTANCE, 0));
+        list.add(toggleEffect("eff_strength", Material.BLAZE_POWDER, "Stärke I", "Mehr Nahkampfschaden", 14, 3, 900, PotionEffectType.STRENGTH, 0));
+        list.add(toggleEffect("eff_res", Material.SHIELD, "Resistenz I", "Weniger Schaden", 18, 3, 1200, PotionEffectType.RESISTANCE, 0));
         list.add(toggleEffect("eff_dolphin", Material.HEART_OF_THE_SEA, "Delfins Gnade", "Schneller schwimmen", 18, 4, 1200, PotionEffectType.DOLPHINS_GRACE, 0));
         list.add(toggleEffect("eff_slowfall", Material.PHANTOM_MEMBRANE, "Langsamer Fall", "Sicheres Fallen", 16, 4, 1200, PotionEffectType.SLOW_FALLING, 0));
         list.add(toggleEffect("eff_conduit", Material.CONDUIT, "Meereskraft", "Unterwasser-Boost", 24, 5, 900, PotionEffectType.CONDUIT_POWER, 0));
         list.add(toggleEffect("eff_speed_2", Material.SUGAR, "Tempo II", "Sehr schnelles Laufen", 22, 4, 1200, PotionEffectType.SPEED, 1));
-        list.add(toggleEffect("eff_haste_2", Material.NETHERITE_PICKAXE, "Eile II", "Sehr schnelles Abbauen", 28, 5, 900, PotionEffectType.FAST_DIGGING, 1));
+        list.add(toggleEffect("eff_haste_2", Material.NETHERITE_PICKAXE, "Eile II", "Sehr schnelles Abbauen", 28, 5, 900, PotionEffectType.HASTE, 1));
 
         // Kosmetik allgemein + spezielle Trigger
         list.add(toggleParticle("cos_heart", Material.POPPY, "Herz-Aura", "Herzpartikel um dich", 5, 1, 2400, Particle.HEART));
-        list.add(toggleParticle("cos_happy", Material.LIME_DYE, "Freude-Aura", "Fröhliche Partikel", 7, 1, 2400, Particle.VILLAGER_HAPPY));
-        list.add(toggleParticle("cos_magic", Material.ENCHANTED_BOOK, "Magie-Aura", "Magische Partikel", 12, 2, 1800, Particle.ENCHANTMENT_TABLE));
+        list.add(toggleParticle("cos_happy", Material.LIME_DYE, "Freude-Aura", "Fröhliche Partikel", 7, 1, 2400, Particle.HAPPY_VILLAGER));
+        list.add(toggleParticle("cos_magic", Material.ENCHANTED_BOOK, "Magie-Aura", "Magische Partikel", 12, 2, 1800, Particle.ENCHANT));
         list.add(toggleParticle("cos_tp", Material.ENDER_PEARL, "Teleport-Effekt", "Effekt bei Teleport", 16, 2, 1800, Particle.PORTAL));
         list.add(toggleParticle("cos_break", Material.IRON_PICKAXE, "Abbau-Effekt", "Effekt beim Abbauen", 16, 2, 1800, Particle.CRIT));
         list.add(toggleParticle("cos_walk", Material.LEATHER_BOOTS, "Lauf-Effekt", "Effekt beim Laufen", 14, 2, 1800, Particle.CLOUD));
@@ -544,25 +544,30 @@ public class ShopService {
 
         // Friedliche Mobs vollständig
         list.add(chargeEgg("spawn_allay", Material.ALLAY_SPAWN_EGG, "Allay-Spawn-Ei", 26, 5));
+        list.add(chargeEgg("spawn_armadillo", Material.ARMADILLO_SPAWN_EGG, "Gürteltier-Spawn-Ei", 12, 2));
         list.add(chargeEgg("spawn_axolotl", Material.AXOLOTL_SPAWN_EGG, "Axolotl-Spawn-Ei", 18, 3));
         list.add(chargeEgg("spawn_bat", Material.BAT_SPAWN_EGG, "Fledermaus-Spawn-Ei", 10, 2));
         list.add(chargeEgg("spawn_bee", Material.BEE_SPAWN_EGG, "Bienen-Spawn-Ei", 12, 2));
         list.add(chargeEgg("spawn_camel", Material.CAMEL_SPAWN_EGG, "Kamel-Spawn-Ei", 18, 3));
+        list.add(chargeEgg("spawn_camel_husk", Material.CAMEL_HUSK_SPAWN_EGG, "Kamelhusk-Spawn-Ei", 20, 4));
         list.add(chargeEgg("spawn_cat", Material.CAT_SPAWN_EGG, "Katzen-Spawn-Ei", 10, 1));
         list.add(chargeEgg("spawn_chicken", Material.CHICKEN_SPAWN_EGG, "Huhn-Spawn-Ei", 8, 1));
         list.add(chargeEgg("spawn_cod", Material.COD_SPAWN_EGG, "Kabeljau-Spawn-Ei", 8, 1));
         list.add(chargeEgg("spawn_cow", Material.COW_SPAWN_EGG, "Kuh-Spawn-Ei", 8, 1));
+        list.add(chargeEgg("spawn_copper_golem", Material.COPPER_GOLEM_SPAWN_EGG, "Kupfergolem-Spawn-Ei", 20, 4));
         list.add(chargeEgg("spawn_dolphin", Material.DOLPHIN_SPAWN_EGG, "Delfin-Spawn-Ei", 16, 3));
         list.add(chargeEgg("spawn_donkey", Material.DONKEY_SPAWN_EGG, "Esel-Spawn-Ei", 12, 2));
         list.add(chargeEgg("spawn_fox", Material.FOX_SPAWN_EGG, "Fuchs-Spawn-Ei", 14, 2));
         list.add(chargeEgg("spawn_frog", Material.FROG_SPAWN_EGG, "Frosch-Spawn-Ei", 14, 2));
         list.add(chargeEgg("spawn_glow_squid", Material.GLOW_SQUID_SPAWN_EGG, "Leuchttintenfisch-Spawn-Ei", 14, 2));
         list.add(chargeEgg("spawn_goat", Material.GOAT_SPAWN_EGG, "Ziegen-Spawn-Ei", 12, 2));
+        list.add(chargeEgg("spawn_happy_ghast", Material.HAPPY_GHAST_SPAWN_EGG, "Gluecksghast-Spawn-Ei", 30, 6));
         list.add(chargeEgg("spawn_horse", Material.HORSE_SPAWN_EGG, "Pferde-Spawn-Ei", 14, 2));
         list.add(chargeEgg("spawn_iron_golem", Material.IRON_GOLEM_SPAWN_EGG, "Eisengolem-Spawn-Ei", 28, 5));
         list.add(chargeEgg("spawn_llama", Material.LLAMA_SPAWN_EGG, "Lama-Spawn-Ei", 13, 2));
         list.add(chargeEgg("spawn_mooshroom", Material.MOOSHROOM_SPAWN_EGG, "Mooshroom-Spawn-Ei", 22, 4));
         list.add(chargeEgg("spawn_mule", Material.MULE_SPAWN_EGG, "Maultier-Spawn-Ei", 12, 2));
+        list.add(chargeEgg("spawn_nautilus", Material.NAUTILUS_SPAWN_EGG, "Nautilus-Spawn-Ei", 18, 3));
         list.add(chargeEgg("spawn_ocelot", Material.OCELOT_SPAWN_EGG, "Ozelot-Spawn-Ei", 15, 3));
         list.add(chargeEgg("spawn_panda", Material.PANDA_SPAWN_EGG, "Panda-Spawn-Ei", 24, 4));
         list.add(chargeEgg("spawn_parrot", Material.PARROT_SPAWN_EGG, "Papagei-Spawn-Ei", 15, 3));
@@ -583,6 +588,9 @@ public class ShopService {
         list.add(chargeEgg("spawn_turtle", Material.TURTLE_SPAWN_EGG, "Schildkröten-Spawn-Ei", 16, 3));
         list.add(chargeEgg("spawn_villager", Material.VILLAGER_SPAWN_EGG, "Dorfbewohner-Spawn-Ei", 25, 5));
         list.add(chargeEgg("spawn_wandering_trader", Material.WANDERING_TRADER_SPAWN_EGG, "Fahrender-Händler-Spawn-Ei", 24, 5));
+        list.add(chargeEgg("spawn_wolf", Material.WOLF_SPAWN_EGG, "Wolf-Spawn-Ei", 14, 2));
+        list.add(chargeEgg("spawn_zombie_horse", Material.ZOMBIE_HORSE_SPAWN_EGG, "Zombiepferd-Spawn-Ei", 30, 5));
+        list.add(chargeEgg("spawn_zombie_nautilus", Material.ZOMBIE_NAUTILUS_SPAWN_EGG, "Zombie-Nautilus-Spawn-Ei", 22, 4));
 
         return list;
     }
