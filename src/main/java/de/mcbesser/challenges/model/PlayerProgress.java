@@ -10,11 +10,12 @@ import java.util.Set;
 import java.util.HashMap;
 
 public class PlayerProgress {
+    private static final int DEFAULT_CHALLENGE_DURATION_DAYS = 2;
 
     private int tokens;
     private int groupTier = 1;
     private int currentGroup = 1;
-    private LocalDateTime expiresAt = LocalDateTime.now().plusDays(1);
+    private LocalDateTime expiresAt = LocalDateTime.now().plusDays(DEFAULT_CHALLENGE_DURATION_DAYS);
     private final Map<ChallengePeriod, Integer> remainingSkips = new EnumMap<>(ChallengePeriod.class);
     private final Map<ChallengePeriod, List<PlayerChallenge>> activeChallenges = new EnumMap<>(ChallengePeriod.class);
     private final Set<String> unlockedRewards = new HashSet<>();

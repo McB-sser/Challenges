@@ -106,10 +106,12 @@ public class ShopService {
 
     public void openModules(Player player) {
         PlayerProgress progress = challengeService.getProgress(player.getUniqueId());
+        cleanupDepletedModules(progress);
         Inventory inv = Bukkit.createInventory(null, 54, MODULES_TITLE);
 
         List<ShopReward> unlocked = rewards.stream()
                 .filter(reward -> progress.getUnlockedRewards().contains(reward.id()))
+                .filter(reward -> hasRemainingUses(progress, reward))
                 .sorted(rewardComparator())
                 .toList();
 
@@ -261,6 +263,7 @@ public class ShopService {
         int seconds = progress.getModuleSeconds().getOrDefault(reward.id(), 0);
         if (seconds <= 0) {
             progress.getActiveToggles().remove(reward.id());
+            progress.getModuleSeconds().remove(reward.id());
             clearEffect(player, reward);
             player.sendMessage(ChatColor.RED + "Kein Zeitguthaben mehr für " + reward.name() + ".");
             return;
@@ -289,8 +292,13 @@ public class ShopService {
         }
 
         if (executeCharge(player, reward.id())) {
-            progress.getModuleCharges().put(reward.id(), charges - 1);
-            player.sendMessage(ChatColor.GREEN + reward.name() + " benutzt. Rest: " + (charges - 1) + " Aufladung(en).");
+            int remainingCharges = charges - 1;
+            if (remainingCharges > 0) {
+                progress.getModuleCharges().put(reward.id(), remainingCharges);
+            } else {
+                progress.getModuleCharges().remove(reward.id());
+            }
+            player.sendMessage(ChatColor.GREEN + reward.name() + " benutzt. Rest: " + remainingCharges + " Aufladung(en).");
             player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING, 0.7f, 1.3f);
         } else {
             player.sendMessage(ChatColor.RED + "Dieses Modul kann hier gerade nicht genutzt werden.");
@@ -449,15 +457,37 @@ public class ShopService {
                     int left = progress.getModuleSeconds().getOrDefault(reward.id(), 0);
                     if (left <= 0) {
                         progress.getActiveToggles().remove(reward.id());
+                        progress.getModuleSeconds().remove(reward.id());
                         clearEffect(player, reward);
                         continue;
                     }
 
-                    progress.getModuleSeconds().put(reward.id(), left - 1);
-                    applyTickEffect(player, reward);
+                    int remainingSeconds = left - 1;
+                    if (remainingSeconds > 0) {
+                        progress.getModuleSeconds().put(reward.id(), remainingSeconds);
+                        applyTickEffect(player, reward);
+                    } else {
+                        progress.getModuleSeconds().remove(reward.id());
+                        progress.getActiveToggles().remove(reward.id());
+                        clearEffect(player, reward);
+                    }
                 }
+                cleanupDepletedModules(progress);
             }
         }, 20L, 20L);
+    }
+
+    private boolean hasRemainingUses(PlayerProgress progress, ShopReward reward) {
+        if (reward.usageType() == ShopUsageType.TOGGLE_TIME) {
+            return progress.getModuleSeconds().getOrDefault(reward.id(), 0) > 0;
+        }
+        return progress.getModuleCharges().getOrDefault(reward.id(), 0) > 0;
+    }
+
+    private void cleanupDepletedModules(PlayerProgress progress) {
+        progress.getActiveToggles().removeIf(rewardId -> progress.getModuleSeconds().getOrDefault(rewardId, 0) <= 0);
+        progress.getModuleSeconds().entrySet().removeIf(entry -> entry.getValue() == null || entry.getValue() <= 0);
+        progress.getModuleCharges().entrySet().removeIf(entry -> entry.getValue() == null || entry.getValue() <= 0);
     }
 
     private void applyTickEffect(Player player, ShopReward reward) {

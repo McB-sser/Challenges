@@ -30,6 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class ChallengeService {
+    private static final int CHALLENGE_DURATION_DAYS = 2;
 
     private final JavaPlugin plugin;
     private final PlayerDataStore dataStore;
@@ -96,9 +97,9 @@ public class ChallengeService {
         baseTokensByGroup.put(ChallengePeriod.GROUP_2, 2);
         baseTokensByGroup.put(ChallengePeriod.GROUP_3, 4);
 
-        quotaDaysByGroup.put(ChallengePeriod.GROUP_1, 1);
-        quotaDaysByGroup.put(ChallengePeriod.GROUP_2, 2);
-        quotaDaysByGroup.put(ChallengePeriod.GROUP_3, 5);
+        quotaDaysByGroup.put(ChallengePeriod.GROUP_1, CHALLENGE_DURATION_DAYS);
+        quotaDaysByGroup.put(ChallengePeriod.GROUP_2, CHALLENGE_DURATION_DAYS);
+        quotaDaysByGroup.put(ChallengePeriod.GROUP_3, CHALLENGE_DURATION_DAYS);
 
         for (ChallengePeriod group : ChallengePeriod.values()) {
             String key = switch (group) {
@@ -134,7 +135,7 @@ public class ChallengeService {
     public void ensureInitialized(UUID playerId) {
         PlayerProgress progress = dataStore.getOrCreate(playerId);
         if (progress.getExpiresAt() == null) {
-            progress.setExpiresAt(LocalDateTime.now().plusDays(1));
+            progress.setExpiresAt(LocalDateTime.now().plusDays(CHALLENGE_DURATION_DAYS));
         }
         processExpiry(playerId, false);
         for (ChallengePeriod group : ChallengePeriod.values()) {
@@ -165,7 +166,7 @@ public class ChallengeService {
 
         progress.setExpiresAt(expiry.plusDays(overdueDays));
         if (progress.getExpiresAt().isBefore(now)) {
-            progress.setExpiresAt(now.plusDays(1));
+            progress.setExpiresAt(now.plusDays(CHALLENGE_DURATION_DAYS));
         }
 
         Player player = Bukkit.getPlayer(playerId);
@@ -241,13 +242,9 @@ public class ChallengeService {
     }
 
     private void completeGroup(Player player, PlayerProgress progress, ChallengePeriod group) {
-        int quotaDays = quotaDaysByGroup.getOrDefault(group, 1);
+        int quotaDays = quotaDaysByGroup.getOrDefault(group, CHALLENGE_DURATION_DAYS);
         LocalDateTime now = LocalDateTime.now();
-        LocalDateTime base = progress.getExpiresAt() == null ? now : progress.getExpiresAt();
-        if (base.isBefore(now)) {
-            base = now;
-        }
-        progress.setExpiresAt(base.plusDays(quotaDays));
+        progress.setExpiresAt(now.plusDays(quotaDays));
 
         if (group == ChallengePeriod.GROUP_3) {
             progress.setGroupTier(progress.getGroupTier() + 1);
