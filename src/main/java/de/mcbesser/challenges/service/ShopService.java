@@ -7,11 +7,14 @@ import de.mcbesser.challenges.model.ShopReward;
 import de.mcbesser.challenges.model.ShopUsageType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -35,6 +38,7 @@ import java.util.Optional;
 
 public class ShopService {
 
+    private static final String DARK_SPOTS_REWARD_ID = "util_darkspots";
     private static final String SHOP_TITLE = ChatColor.GOLD + "Token-Shop";
     private static final String MODULES_TITLE = ChatColor.LIGHT_PURPLE + "Meine Module";
     private static final String EFFECTS_TITLE = ChatColor.AQUA + "Effekte";
@@ -58,6 +62,7 @@ public class ShopService {
     private final NamespacedKey actionKey;
     private final NamespacedKey payloadKey;
     private BukkitTask moduleTickTask;
+    private int moduleTickPhase;
 
     public ShopService(JavaPlugin plugin, ChallengeService challengeService) {
         this.plugin = plugin;
@@ -444,6 +449,8 @@ public class ShopService {
 
     private void startModuleTicker() {
         moduleTickTask = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+            boolean consumeSecond = moduleTickPhase == 0;
+            moduleTickPhase = (moduleTickPhase + 1) % 20;
             for (Player player : Bukkit.getOnlinePlayers()) {
                 PlayerProgress progress = challengeService.getProgress(player.getUniqueId());
                 List<String> active = new ArrayList<>(progress.getActiveToggles());
@@ -462,19 +469,23 @@ public class ShopService {
                         continue;
                     }
 
-                    int remainingSeconds = left - 1;
-                    if (remainingSeconds > 0) {
-                        progress.getModuleSeconds().put(reward.id(), remainingSeconds);
-                        applyTickEffect(player, reward);
+                    if (consumeSecond) {
+                        int remainingSeconds = left - 1;
+                        if (remainingSeconds > 0) {
+                            progress.getModuleSeconds().put(reward.id(), remainingSeconds);
+                            applyTickEffect(player, reward);
+                        } else {
+                            progress.getModuleSeconds().remove(reward.id());
+                            progress.getActiveToggles().remove(reward.id());
+                            clearEffect(player, reward);
+                        }
                     } else {
-                        progress.getModuleSeconds().remove(reward.id());
-                        progress.getActiveToggles().remove(reward.id());
-                        clearEffect(player, reward);
+                        applyTickEffect(player, reward);
                     }
                 }
                 cleanupDepletedModules(progress);
             }
-        }, 20L, 20L);
+        }, 1L, 1L);
     }
 
     private boolean hasRemainingUses(PlayerProgress progress, ShopReward reward) {
@@ -491,6 +502,10 @@ public class ShopService {
     }
 
     private void applyTickEffect(Player player, ShopReward reward) {
+        if (DARK_SPOTS_REWARD_ID.equals(reward.id())) {
+            renderDarkSpots(player);
+            return;
+        }
         if (reward.effectType() != null) {
             int amplifier = Math.max(0, reward.effectAmplifier());
             player.addPotionEffect(new PotionEffect(reward.effectType(), 220, amplifier, true, false, true));
@@ -505,6 +520,79 @@ public class ShopService {
         if (reward.effectType() != null) {
             player.removePotionEffect(reward.effectType());
         }
+    }
+
+    private void renderDarkSpots(Player player) {
+        Location origin = player.getLocation();
+        World world = player.getWorld();
+        int centerX = origin.getBlockX();
+        int centerY = origin.getBlockY();
+        int centerZ = origin.getBlockZ();
+        int radius = 10;
+
+        for (int x = centerX - radius; x <= centerX + radius; x++) {
+            for (int z = centerZ - radius; z <= centerZ + radius; z++) {
+                double dx = x + 0.5 - origin.getX();
+                double dz = z + 0.5 - origin.getZ();
+                if ((dx * dx) + (dz * dz) > (radius * radius)) {
+                    continue;
+                }
+
+                Block surface = findSurfaceBlock(world, x, centerY, z);
+                if (surface == null) {
+                    continue;
+                }
+
+                Block feet = surface.getRelative(0, 1, 0);
+                Block head = surface.getRelative(0, 2, 0);
+                if (!feet.isPassable() || !head.isPassable()) {
+                    continue;
+                }
+
+                int blockLight = feet.getLightFromBlocks();
+                if (isHostileSpawnSpot(surface, feet, head, blockLight)) {
+                    spawnMarker(world, surface, Color.RED, 1.25f);
+                    continue;
+                }
+                if (blockLight <= 3) {
+                    spawnMarker(world, surface, Color.ORANGE, 1.0f);
+                } else if (blockLight <= 7) {
+                    spawnMarker(world, surface, Color.YELLOW, 0.85f);
+                }
+            }
+        }
+    }
+
+    private Block findSurfaceBlock(World world, int x, int centerY, int z) {
+        for (int offset = 2; offset >= -3; offset--) {
+            Block candidate = world.getBlockAt(x, centerY + offset, z);
+            if (candidate.getType().isAir()) {
+                continue;
+            }
+            if (candidate.isSolid() && !candidate.isPassable()) {
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    private boolean isHostileSpawnSpot(Block surface, Block feet, Block head, int blockLight) {
+        if (blockLight > 0) {
+            return false;
+        }
+        if (!surface.isSolid() || surface.isPassable()) {
+            return false;
+        }
+        Material type = surface.getType();
+        if (type == Material.BEDROCK || type == Material.BARRIER) {
+            return false;
+        }
+        return feet.isPassable() && head.isPassable();
+    }
+
+    private void spawnMarker(World world, Block surface, Color color, float size) {
+        Location marker = surface.getLocation().add(0.5, 1.08, 0.5);
+        world.spawnParticle(Particle.DUST, marker, 1, 0.0, 0.0, 0.0, 0.0, new Particle.DustOptions(color, size));
     }
 
     private Optional<ShopReward> findReward(String id) {
@@ -529,6 +617,7 @@ public class ShopService {
         list.add(toggleEffect("eff_water", Material.TURTLE_HELMET, "Wasseratmung", "Länger unter Wasser", 10, 2, 1800, PotionEffectType.WATER_BREATHING, 0));
         list.add(toggleEffect("eff_fire", Material.MAGMA_CREAM, "Feuerresistenz", "Schutz vor Feuer und Lava", 12, 2, 1500, PotionEffectType.FIRE_RESISTANCE, 0));
         list.add(toggleEffect("eff_luck", Material.RABBIT_FOOT, "Glück I", "Mehr Glück bei Beute", 11, 2, 1500, PotionEffectType.LUCK, 0));
+        list.add(toggleEffect("eff_luck_2", Material.RABBIT_HIDE, "GlÃ¼ck II", "Deutlich mehr GlÃ¼ck bei Beute", 18, 4, 1200, PotionEffectType.LUCK, 1));
         list.add(toggleEffect("eff_regen", Material.GLISTERING_MELON_SLICE, "Regeneration I", "Lebensregeneration", 14, 3, 900, PotionEffectType.REGENERATION, 0));
         list.add(toggleEffect("eff_strength", Material.BLAZE_POWDER, "Stärke I", "Mehr Nahkampfschaden", 14, 3, 900, PotionEffectType.STRENGTH, 0));
         list.add(toggleEffect("eff_res", Material.SHIELD, "Resistenz I", "Weniger Schaden", 18, 3, 1200, PotionEffectType.RESISTANCE, 0));
@@ -537,6 +626,7 @@ public class ShopService {
         list.add(toggleEffect("eff_conduit", Material.CONDUIT, "Meereskraft", "Unterwasser-Boost", 24, 5, 900, PotionEffectType.CONDUIT_POWER, 0));
         list.add(toggleEffect("eff_speed_2", Material.SUGAR, "Tempo II", "Sehr schnelles Laufen", 22, 4, 1200, PotionEffectType.SPEED, 1));
         list.add(toggleEffect("eff_haste_2", Material.NETHERITE_PICKAXE, "Eile II", "Sehr schnelles Abbauen", 28, 5, 900, PotionEffectType.HASTE, 1));
+        list.add(toggleEffect(DARK_SPOTS_REWARD_ID, Material.LANTERN, "Dunkelstellen-Scanner", "Markiert dunkle Spawn- und Wachstumsstellen um dich", 1, 1, 300, null, 0));
 
         // Kosmetik allgemein + spezielle Trigger
         list.add(toggleParticle("cos_heart", Material.POPPY, "Herz-Aura", "Herzpartikel um dich", 5, 1, 2400, Particle.HEART));
