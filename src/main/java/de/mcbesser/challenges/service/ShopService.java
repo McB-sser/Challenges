@@ -617,7 +617,7 @@ public class ShopService {
         list.add(toggleEffect("eff_water", Material.TURTLE_HELMET, "Wasseratmung", "Länger unter Wasser", 10, 2, 1800, PotionEffectType.WATER_BREATHING, 0));
         list.add(toggleEffect("eff_fire", Material.MAGMA_CREAM, "Feuerresistenz", "Schutz vor Feuer und Lava", 12, 2, 1500, PotionEffectType.FIRE_RESISTANCE, 0));
         list.add(toggleEffect("eff_luck", Material.RABBIT_FOOT, "Glück I", "Mehr Glück bei Beute", 11, 2, 1500, PotionEffectType.LUCK, 0));
-        list.add(toggleEffect("eff_luck_2", Material.RABBIT_HIDE, "GlÃ¼ck II", "Deutlich mehr GlÃ¼ck bei Beute", 18, 4, 1200, PotionEffectType.LUCK, 1));
+        list.add(toggleEffect("eff_luck_2", Material.RABBIT_HIDE, "Gl\u00fcck II", "Deutlich mehr Gl\u00fcck bei Beute", 18, 4, 1200, PotionEffectType.LUCK, 1));
         list.add(toggleEffect("eff_regen", Material.GLISTERING_MELON_SLICE, "Regeneration I", "Lebensregeneration", 14, 3, 900, PotionEffectType.REGENERATION, 0));
         list.add(toggleEffect("eff_strength", Material.BLAZE_POWDER, "Stärke I", "Mehr Nahkampfschaden", 14, 3, 900, PotionEffectType.STRENGTH, 0));
         list.add(toggleEffect("eff_res", Material.SHIELD, "Resistenz I", "Weniger Schaden", 18, 3, 1200, PotionEffectType.RESISTANCE, 0));
