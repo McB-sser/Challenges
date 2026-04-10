@@ -1,4 +1,4 @@
-package de.mcbesser.challenges.service;
+﻿package de.mcbesser.challenges.service;
 
 import de.mcbesser.challenges.model.ChallengePeriod;
 import de.mcbesser.challenges.model.PlayerChallenge;
@@ -57,9 +57,9 @@ public class MainMenuService {
                 ChatColor.YELLOW + "Aktuelle Stufe: " + progress.getGroupTier(),
                 ChatColor.DARK_GRAY + "Gruppen-Reset endet: " + endLabel,
                 ChatColor.DARK_GRAY + "Kontingent endet: " + endLabel,
-                ChatColor.DARK_GRAY + "Basiszeit pro Durchlauf: 2 Tage für Gruppe 1-3",
+                ChatColor.DARK_GRAY + "Basiszeit pro Durchlauf: 2 Tage f\u00fcr Gruppe 1-3",
                 ChatColor.DARK_GRAY + "Aufbau: G1 +1 Tag, G2 +2 Tage, G3 +5 Tage",
-                ChatColor.DARK_GRAY + "Ohne Kontingent sinkt täglich 1 Stufe"
+                ChatColor.DARK_GRAY + "Ohne Kontingent sinkt t\u00e4glich 1 Stufe"
         ), ACTION_OPEN_CHALLENGES));
 
         inv.setItem(13, actionItem(Material.SUNFLOWER, ChatColor.GOLD + "Token-Shop", List.of(
@@ -81,8 +81,8 @@ public class MainMenuService {
         Inventory inv = Bukkit.createInventory(null, 54, CHALLENGE_MENU_TITLE);
 
         fillGroupSection(inv, player, progress, visible, 0);
-        inv.setItem(53, actionItem(Material.ARROW, ChatColor.GRAY + "Zurück", List.of(
-                ChatColor.DARK_GRAY + "Zum Hauptmenü"
+        inv.setItem(53, actionItem(Material.ARROW, ChatColor.GRAY + "Zur\u00fcck", List.of(
+                ChatColor.DARK_GRAY + "Zum Hauptmen\u00fc"
         ), ACTION_BACK));
         player.openInventory(inv);
     }
@@ -97,11 +97,11 @@ public class MainMenuService {
                 List.of(
                         ChatColor.DARK_GRAY + "Gruppen-Reset endet: " + endLabel,
                         ChatColor.DARK_GRAY + "Kontingent endet: " + endLabel,
-                        ChatColor.DARK_GRAY + "Basiszeit pro Durchlauf: 2 Tage für Gruppe 1-3",
+                        ChatColor.DARK_GRAY + "Basiszeit pro Durchlauf: 2 Tage f\u00fcr Gruppe 1-3",
                         ChatColor.DARK_GRAY + "Aufbau: G1 +1 Tag, G2 +2 Tage, G3 +5 Tage",
-                        ChatColor.DARK_GRAY + "Ohne Kontingent sinkt täglich 1 Stufe",
-                        ChatColor.DARK_GRAY + "Alle Aufgaben sind überspringbar (solange Skips übrig sind)",
-                        ChatColor.DARK_GRAY + "Rechtsklick auf Aufgabe zum Überspringen"
+                        ChatColor.DARK_GRAY + "Ohne Kontingent sinkt t\u00e4glich 1 Stufe",
+                        ChatColor.DARK_GRAY + "Alle Aufgaben sind \u00fcberspringbar (solange Skips \u00fcbrig sind)",
+                        ChatColor.DARK_GRAY + "Rechtsklick auf Aufgabe zum \u00dcberspringen"
                 )
         ));
 
@@ -122,9 +122,9 @@ public class MainMenuService {
             if (challenge.isCompleted()) {
                 lore.add(ChatColor.GREEN + "Erledigt");
             } else if (challenge.isSkipped()) {
-                lore.add(ChatColor.GRAY + "Übersprungen");
+                lore.add(ChatColor.GRAY + "\u00dcbersprungen");
             } else {
-                lore.add(ChatColor.YELLOW + "Rechtsklick: überspringen (wenn Skips übrig)");
+                lore.add(ChatColor.YELLOW + "Rechtsklick: \u00fcberspringen (wenn Skips \u00fcbrig)");
             }
 
             ItemStack item = new ItemStack(icon);

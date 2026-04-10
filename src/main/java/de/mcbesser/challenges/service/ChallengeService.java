@@ -1,4 +1,4 @@
-package de.mcbesser.challenges.service;
+﻿package de.mcbesser.challenges.service;
 
 import de.mcbesser.challenges.data.PlayerDataStore;
 import de.mcbesser.challenges.model.ChallengePeriod;
@@ -173,9 +173,9 @@ public class ChallengeService {
         if (notify && player != null && player.isOnline()) {
             if (loss > 0) {
                 player.sendMessage(ChatColor.RED + "Kontingent abgelaufen. Stufe -" + loss
-                        + ", neue Stufe: " + progress.getGroupTier() + ".");
+                        + ", ne\u00fc Stufe: " + progress.getGroupTier() + ".");
             } else {
-                player.sendMessage(ChatColor.RED + "Kontingent abgelaufen. Gruppenfortschritt zurueckgesetzt.");
+                player.sendMessage(ChatColor.RED + "Kontingent abgelaufen. Gruppenfortschritt zur\u00fcckgesetzt.");
             }
         }
     }
@@ -249,11 +249,11 @@ public class ChallengeService {
         if (group == ChallengePeriod.GROUP_3) {
             progress.setGroupTier(progress.getGroupTier() + 1);
             resetGroups(player.getUniqueId(), progress);
-            player.sendMessage(ChatColor.AQUA + "Alle Gruppen abgeschlossen. Neue Stufe: " + progress.getGroupTier());
+            player.sendMessage(ChatColor.AQUA + "Alle Gruppen abgeschlossen. Ne\u00fc Stufe: " + progress.getGroupTier());
         } else {
             progress.setCurrentGroup(progress.getCurrentGroup() + 1);
             player.sendMessage(ChatColor.GOLD + "Gruppe abgeschlossen: " + periodName(group)
-                    + ChatColor.GRAY + " | Naechste Gruppe freigeschaltet.");
+                    + ChatColor.GRAY + " | N\u00e4chste Gruppe freigeschaltet.");
         }
     }
 
@@ -379,15 +379,15 @@ public class ChallengeService {
 
     public String challengeHowTo(PlayerChallenge challenge) {
         return switch (challenge.getType()) {
-            case MINE_STONE -> "Baue Steinbloecke wie Stein, Bruchstein oder Tiefenschiefer ab.";
-            case MINE_ORE -> "Baue echte Erzbloecke wie Kohle, Eisen, Diamant.";
+            case MINE_STONE -> "Ba\u00fc Steinbl\u00f6cke wie Stein, Bruchstein oder Tiefenschiefer ab.";
+            case MINE_ORE -> "Ba\u00fc echte Erzbl\u00f6cke wie Kohle, Eisen, Diamant.";
             case KILL_MOB -> "Besiege beliebige Mobs mit dem finalen Treffer.";
-            case LANDSCAPING -> "Baue Erde ab, setze passende Bloecke oder pflanze und ernte Nutzpflanzen.";
-            case FISH -> "Fange mit der Angel (nur gefangene Fische zaehlen).";
+            case LANDSCAPING -> "Ba\u00fc Erde ab, setze passende Bl\u00f6cke oder pflanze und ernte Nutzpflanzen.";
+            case FISH -> "Fange mit der Angel (nur gefangene Fische z\u00e4hlen).";
             case CRAFT -> "Stelle echte Items an Werkbank oder Inventar her.";
-            case BREED -> "Zuechte Tiere mit passendem Futter.";
+            case BREED -> "Z\u00fcchte Tiere mit passendem Futter.";
             case SMELT -> "Entnimm geschmolzene Items aus dem Ofen.";
-            case ENCHANT -> "Verzaubere Gegenstaende am Zaubertisch.";
+            case ENCHANT -> "Verzaubere Gegenst\u00e4nde am Zaubertisch.";
             case WALK_DISTANCE -> "Bewege dich zu Fuss, schwimmend oder fliegend durch die Welt.";
             case TRADE_VILLAGER -> "Schliesse echte Villager-Handel ab.";
         };

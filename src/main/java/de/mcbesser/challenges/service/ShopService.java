@@ -1,4 +1,4 @@
-
+﻿
 package de.mcbesser.challenges.service;
 
 import de.mcbesser.challenges.model.PlayerProgress;
@@ -43,7 +43,7 @@ public class ShopService {
     private static final String MODULES_TITLE = ChatColor.LIGHT_PURPLE + "Meine Module";
     private static final String EFFECTS_TITLE = ChatColor.AQUA + "Effekte";
     private static final String COSMETIC_TITLE = ChatColor.LIGHT_PURPLE + "Kosmetik";
-    private static final String CRAFTING_TITLE = ChatColor.YELLOW + "Werkbänke & Verzauberung";
+    private static final String CRAFTING_TITLE = ChatColor.YELLOW + "Werkb\u00e4nke & Verzauberung";
     private static final String MOBS_TITLE = ChatColor.DARK_GREEN + "Spawn-Eier";
 
     private static final String ACTION_BUY = "buy";
@@ -84,25 +84,25 @@ public class ShopService {
         PlayerProgress progress = challengeService.getProgress(player.getUniqueId());
         Inventory inv = Bukkit.createInventory(null, 27, SHOP_TITLE);
 
-        // Gleichmäßige Verteilung der Kategorien
+        // Gleichm\u00e4\u00dfige Verteilung der Kategorien
         inv.setItem(9, actionItem(Material.POTION, ChatColor.AQUA + "Effekte", List.of(
                 ChatColor.GRAY + "Positive Trank- und Beacon-Effekte"
         ), ACTION_OPEN_CATEGORY, ShopCategory.EFFECTS.name()));
         inv.setItem(11, actionItem(Material.FIREWORK_STAR, ChatColor.LIGHT_PURPLE + "Kosmetik", List.of(
                 ChatColor.GRAY + "Allgemein, Teleport, Abbau, Laufen, Bogen, Elytra"
         ), ACTION_OPEN_CATEGORY, ShopCategory.COSMETIC.name()));
-        inv.setItem(15, actionItem(Material.ENCHANTING_TABLE, ChatColor.YELLOW + "Werkbänke", List.of(
-                ChatColor.GRAY + "Mobile Blöcke inkl. Enderkiste und Zaubertisch 0-15"
+        inv.setItem(15, actionItem(Material.ENCHANTING_TABLE, ChatColor.YELLOW + "Werkb\u00e4nke", List.of(
+                ChatColor.GRAY + "Mobile Bl\u00f6cke inkl. Enderkiste und Zaubertisch 0-15"
         ), ACTION_OPEN_CATEGORY, ShopCategory.CRAFTING.name()));
         inv.setItem(17, actionItem(Material.EGG, ChatColor.DARK_GREEN + "Spawn-Eier", List.of(
-                ChatColor.GRAY + "Friedliche Mobs vollständig"
+                ChatColor.GRAY + "Friedliche Mobs vollst\u00e4ndig"
         ), ACTION_OPEN_CATEGORY, ShopCategory.MOBS.name()));
 
         inv.setItem(22, plainItem(Material.SUNFLOWER, ChatColor.GOLD + "Token-Kontostand", List.of(
-                ChatColor.YELLOW + "Verfügbar: " + progress.getTokens() + " Token",
+                ChatColor.YELLOW + "Verf\u00fcgbar: " + progress.getTokens() + " Token",
                 ChatColor.GRAY + "Aktuelle Stufe: " + progress.getGroupTier()
         )));
-        inv.setItem(26, actionItem(Material.ARROW, ChatColor.GRAY + "Zurück", List.of(
+        inv.setItem(26, actionItem(Material.ARROW, ChatColor.GRAY + "Zur\u00fcck", List.of(
                 ChatColor.DARK_GRAY + "Zum Herausforderungs-Hub"
         ), ACTION_BACK_HUB, ""));
 
@@ -141,7 +141,7 @@ public class ShopService {
             )));
         }
 
-        inv.setItem(53, actionItem(Material.ARROW, ChatColor.GRAY + "Zurück", List.of(
+        inv.setItem(53, actionItem(Material.ARROW, ChatColor.GRAY + "Zur\u00fcck", List.of(
                 ChatColor.DARK_GRAY + "Zum Herausforderungs-Hub"
         ), ACTION_BACK_HUB, ""));
         player.openInventory(inv);
@@ -227,7 +227,7 @@ public class ShopService {
             slot++;
         }
 
-        inv.setItem(53, actionItem(Material.ARROW, ChatColor.GRAY + "Zurück", List.of(
+        inv.setItem(53, actionItem(Material.ARROW, ChatColor.GRAY + "Zur\u00fcck", List.of(
                 ChatColor.DARK_GRAY + "Zum Token-Shop"
         ), ACTION_BACK_SHOP, ""));
         player.openInventory(inv);
@@ -237,7 +237,7 @@ public class ShopService {
         PlayerProgress progress = challengeService.getProgress(player.getUniqueId());
         int level = progress.getGroupTier();
         if (level < reward.requiredLevel()) {
-            player.sendMessage(ChatColor.RED + "Benötigte Stufe: " + reward.requiredLevel());
+            player.sendMessage(ChatColor.RED + "Ben\u00f6tigte Stufe: " + reward.requiredLevel());
             player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO, 0.8f, 0.9f);
             return;
         }
@@ -270,7 +270,7 @@ public class ShopService {
             progress.getActiveToggles().remove(reward.id());
             progress.getModuleSeconds().remove(reward.id());
             clearEffect(player, reward);
-            player.sendMessage(ChatColor.RED + "Kein Zeitguthaben mehr für " + reward.name() + ".");
+            player.sendMessage(ChatColor.RED + "Kein Zeitguthaben mehr f\u00fcr " + reward.name() + ".");
             return;
         }
 
@@ -292,7 +292,7 @@ public class ShopService {
         PlayerProgress progress = challengeService.getProgress(player.getUniqueId());
         int charges = progress.getModuleCharges().getOrDefault(reward.id(), 0);
         if (charges <= 0) {
-            player.sendMessage(ChatColor.RED + "Keine Aufladungen übrig.");
+            player.sendMessage(ChatColor.RED + "Keine Aufladungen \u00fcbrig.");
             return;
         }
 
@@ -382,7 +382,7 @@ public class ShopService {
         if (at == null || !isCosmeticActive(player, "cos_walk")) {
             return;
         }
-        // Wichtig: nie die Event-Location mutieren, sonst kann Bewegung verfälscht werden.
+        // Wichtig: nie die Event-Location mutieren, sonst kann Bewegung verf\u00e4lscht werden.
         Location loc = at.clone().add(0.0, 0.05, 0.0);
         loc.getWorld().spawnParticle(Particle.CLOUD, loc, 4, 0.2, 0.03, 0.2, 0.01);
     }
@@ -612,14 +612,14 @@ public class ShopService {
         // Positive Effekte
         list.add(toggleEffect("eff_speed_1", Material.SUGAR, "Tempo I", "Schneller laufen", 6, 1, 1800, PotionEffectType.SPEED, 0));
         list.add(toggleEffect("eff_haste_1", Material.GOLDEN_PICKAXE, "Eile I", "Schneller abbauen", 8, 1, 1800, PotionEffectType.HASTE, 0));
-        list.add(toggleEffect("eff_jump_1", Material.RABBIT_FOOT, "Sprungkraft I", "Höher springen", 8, 1, 1800, PotionEffectType.JUMP_BOOST, 0));
+        list.add(toggleEffect("eff_jump_1", Material.RABBIT_FOOT, "Sprungkraft I", "H\u00f6her springen", 8, 1, 1800, PotionEffectType.JUMP_BOOST, 0));
         list.add(toggleEffect("eff_night", Material.ENDER_EYE, "Nachtsicht", "Klares Sehen im Dunkeln", 9, 1, 2400, PotionEffectType.NIGHT_VISION, 0));
-        list.add(toggleEffect("eff_water", Material.TURTLE_HELMET, "Wasseratmung", "Länger unter Wasser", 10, 2, 1800, PotionEffectType.WATER_BREATHING, 0));
-        list.add(toggleEffect("eff_fire", Material.MAGMA_CREAM, "Feuerresistenz", "Schutz vor Feuer und Lava", 12, 2, 1500, PotionEffectType.FIRE_RESISTANCE, 0));
-        list.add(toggleEffect("eff_luck", Material.RABBIT_FOOT, "Glück I", "Mehr Glück bei Beute", 11, 2, 1500, PotionEffectType.LUCK, 0));
+        list.add(toggleEffect("eff_water", Material.TURTLE_HELMET, "Wasseratmung", "L\u00e4nger unter Wasser", 10, 2, 1800, PotionEffectType.WATER_BREATHING, 0));
+        list.add(toggleEffect("eff_fire", Material.MAGMA_CREAM, "Fe\u00fcrresistenz", "Schutz vor Fe\u00fcr und Lava", 12, 2, 1500, PotionEffectType.FIRE_RESISTANCE, 0));
+        list.add(toggleEffect("eff_luck", Material.RABBIT_FOOT, "Gl\u00fcck I", "Mehr Gl\u00fcck bei Beute", 11, 2, 1500, PotionEffectType.LUCK, 0));
         list.add(toggleEffect("eff_luck_2", Material.RABBIT_HIDE, "Gl\u00fcck II", "Deutlich mehr Gl\u00fcck bei Beute", 18, 4, 1200, PotionEffectType.LUCK, 1));
         list.add(toggleEffect("eff_regen", Material.GLISTERING_MELON_SLICE, "Regeneration I", "Lebensregeneration", 14, 3, 900, PotionEffectType.REGENERATION, 0));
-        list.add(toggleEffect("eff_strength", Material.BLAZE_POWDER, "Stärke I", "Mehr Nahkampfschaden", 14, 3, 900, PotionEffectType.STRENGTH, 0));
+        list.add(toggleEffect("eff_strength", Material.BLAZE_POWDER, "St\u00e4rke I", "Mehr Nahkampfschaden", 14, 3, 900, PotionEffectType.STRENGTH, 0));
         list.add(toggleEffect("eff_res", Material.SHIELD, "Resistenz I", "Weniger Schaden", 18, 3, 1200, PotionEffectType.RESISTANCE, 0));
         list.add(toggleEffect("eff_dolphin", Material.HEART_OF_THE_SEA, "Delfins Gnade", "Schneller schwimmen", 18, 4, 1200, PotionEffectType.DOLPHINS_GRACE, 0));
         list.add(toggleEffect("eff_slowfall", Material.PHANTOM_MEMBRANE, "Langsamer Fall", "Sicheres Fallen", 16, 4, 1200, PotionEffectType.SLOW_FALLING, 0));
@@ -630,23 +630,23 @@ public class ShopService {
 
         // Kosmetik allgemein + spezielle Trigger
         list.add(toggleParticle("cos_heart", Material.POPPY, "Herz-Aura", "Herzpartikel um dich", 5, 1, 2400, Particle.HEART));
-        list.add(toggleParticle("cos_happy", Material.LIME_DYE, "Freude-Aura", "Fröhliche Partikel", 7, 1, 2400, Particle.HAPPY_VILLAGER));
+        list.add(toggleParticle("cos_happy", Material.LIME_DYE, "Freude-Aura", "Fr\u00f6hliche Partikel", 7, 1, 2400, Particle.HAPPY_VILLAGER));
         list.add(toggleParticle("cos_magic", Material.ENCHANTED_BOOK, "Magie-Aura", "Magische Partikel", 12, 2, 1800, Particle.ENCHANT));
         list.add(toggleParticle("cos_tp", Material.ENDER_PEARL, "Teleport-Effekt", "Effekt bei Teleport", 16, 2, 1800, Particle.PORTAL));
         list.add(toggleParticle("cos_break", Material.IRON_PICKAXE, "Abbau-Effekt", "Effekt beim Abbauen", 16, 2, 1800, Particle.CRIT));
         list.add(toggleParticle("cos_walk", Material.LEATHER_BOOTS, "Lauf-Effekt", "Effekt beim Laufen", 14, 2, 1800, Particle.CLOUD));
-        list.add(toggleParticle("cos_bow", Material.BOW, "Bogen-Effekt", "Effekt beim Schießen", 16, 3, 1800, Particle.ELECTRIC_SPARK));
+        list.add(toggleParticle("cos_bow", Material.BOW, "Bogen-Effekt", "Effekt beim Schie\u00dfen", 16, 3, 1800, Particle.ELECTRIC_SPARK));
         list.add(toggleParticle("cos_elytra", Material.ELYTRA, "Elytra-Effekt", "Effekt beim Fliegen", 20, 4, 1500, Particle.END_ROD));
 
-        // Werkbänke + Enderkiste
-        list.add(charge("crafting_table_mobile", Material.CRAFTING_TABLE, "Mobile Werkbank", "Öffnet eine Werkbank", 4, 1, 3));
-        list.add(charge("stonecutter_mobile", Material.STONECUTTER, "Mobiler Steinmetz", "Öffnet einen Steinmetz", 5, 1, 3));
-        list.add(charge("loom_mobile", Material.LOOM, "Mobiler Webstuhl", "Öffnet einen Webstuhl", 5, 1, 3));
-        list.add(charge("cartography_mobile", Material.CARTOGRAPHY_TABLE, "Mobiler Kartentisch", "Öffnet einen Kartentisch", 6, 2, 3));
-        list.add(charge("smithing_mobile", Material.SMITHING_TABLE, "Mobiler Schmiedetisch", "Öffnet einen Schmiedetisch", 8, 2, 2));
-        list.add(charge("grindstone_mobile", Material.GRINDSTONE, "Mobiler Schleifstein", "Öffnet einen Schleifstein", 8, 2, 2));
-        list.add(charge("anvil_mobile", Material.ANVIL, "Mobiler Amboss", "Öffnet einen Amboss", 10, 3, 2));
-        list.add(charge("enderchest_mobile", Material.ENDER_CHEST, "Mobile Enderkiste", "Öffnet deine Enderkiste", 9, 2, 2));
+        // Werkb\u00e4nke + Enderkiste
+        list.add(charge("crafting_table_mobile", Material.CRAFTING_TABLE, "Mobile Werkbank", "\u00d6ffnet eine Werkbank", 4, 1, 3));
+        list.add(charge("stonecutter_mobile", Material.STONECUTTER, "Mobiler Steinmetz", "\u00d6ffnet einen Steinmetz", 5, 1, 3));
+        list.add(charge("loom_mobile", Material.LOOM, "Mobiler Webstuhl", "\u00d6ffnet einen Webstuhl", 5, 1, 3));
+        list.add(charge("cartography_mobile", Material.CARTOGRAPHY_TABLE, "Mobiler Kartentisch", "\u00d6ffnet einen Kartentisch", 6, 2, 3));
+        list.add(charge("smithing_mobile", Material.SMITHING_TABLE, "Mobiler Schmiedetisch", "\u00d6ffnet einen Schmiedetisch", 8, 2, 2));
+        list.add(charge("grindstone_mobile", Material.GRINDSTONE, "Mobiler Schleifstein", "\u00d6ffnet einen Schleifstein", 8, 2, 2));
+        list.add(charge("anvil_mobile", Material.ANVIL, "Mobiler Amboss", "\u00d6ffnet einen Amboss", 10, 3, 2));
+        list.add(charge("enderchest_mobile", Material.ENDER_CHEST, "Mobile Enderkiste", "\u00d6ffnet deine Enderkiste", 9, 2, 2));
 
         for (int shelves = 0; shelves <= 15; shelves++) {
             int levelReq = Math.min(6, 1 + (shelves / 3));
@@ -655,16 +655,16 @@ public class ShopService {
                     "enchant_mobile_" + shelves,
                     Material.ENCHANTING_TABLE,
                     "Mobiler Zaubertisch (" + shelves + " Regale)",
-                    "Verzaubern mit gedacht " + shelves + " Bücherregalen",
+                    "Verzaubern mit gedacht " + shelves + " B\u00fccherregalen",
                     price,
                     levelReq,
                     shelves >= 12 ? 1 : 2
             ));
         }
 
-        // Friedliche Mobs vollständig
+        // Friedliche Mobs vollst\u00e4ndig
         list.add(chargeEgg("spawn_allay", Material.ALLAY_SPAWN_EGG, "Allay-Spawn-Ei", 26, 5));
-        list.add(chargeEgg("spawn_armadillo", Material.ARMADILLO_SPAWN_EGG, "Gürteltier-Spawn-Ei", 12, 2));
+        list.add(chargeEgg("spawn_armadillo", Material.ARMADILLO_SPAWN_EGG, "G\u00fcrteltier-Spawn-Ei", 12, 2));
         list.add(chargeEgg("spawn_axolotl", Material.AXOLOTL_SPAWN_EGG, "Axolotl-Spawn-Ei", 18, 3));
         list.add(chargeEgg("spawn_bat", Material.BAT_SPAWN_EGG, "Fledermaus-Spawn-Ei", 10, 2));
         list.add(chargeEgg("spawn_bee", Material.BEE_SPAWN_EGG, "Bienen-Spawn-Ei", 12, 2));
@@ -681,7 +681,7 @@ public class ShopService {
         list.add(chargeEgg("spawn_frog", Material.FROG_SPAWN_EGG, "Frosch-Spawn-Ei", 14, 2));
         list.add(chargeEgg("spawn_glow_squid", Material.GLOW_SQUID_SPAWN_EGG, "Leuchttintenfisch-Spawn-Ei", 14, 2));
         list.add(chargeEgg("spawn_goat", Material.GOAT_SPAWN_EGG, "Ziegen-Spawn-Ei", 12, 2));
-        list.add(chargeEgg("spawn_happy_ghast", Material.HAPPY_GHAST_SPAWN_EGG, "Gluecksghast-Spawn-Ei", 30, 6));
+        list.add(chargeEgg("spawn_happy_ghast", Material.HAPPY_GHAST_SPAWN_EGG, "Gl\u00fccksghast-Spawn-Ei", 30, 6));
         list.add(chargeEgg("spawn_horse", Material.HORSE_SPAWN_EGG, "Pferde-Spawn-Ei", 14, 2));
         list.add(chargeEgg("spawn_iron_golem", Material.IRON_GOLEM_SPAWN_EGG, "Eisengolem-Spawn-Ei", 28, 5));
         list.add(chargeEgg("spawn_llama", Material.LLAMA_SPAWN_EGG, "Lama-Spawn-Ei", 13, 2));
@@ -692,7 +692,7 @@ public class ShopService {
         list.add(chargeEgg("spawn_panda", Material.PANDA_SPAWN_EGG, "Panda-Spawn-Ei", 24, 4));
         list.add(chargeEgg("spawn_parrot", Material.PARROT_SPAWN_EGG, "Papagei-Spawn-Ei", 15, 3));
         list.add(chargeEgg("spawn_pig", Material.PIG_SPAWN_EGG, "Schwein-Spawn-Ei", 8, 1));
-        list.add(chargeEgg("spawn_polar_bear", Material.POLAR_BEAR_SPAWN_EGG, "Eisbär-Spawn-Ei", 20, 4));
+        list.add(chargeEgg("spawn_polar_bear", Material.POLAR_BEAR_SPAWN_EGG, "Eisb\u00e4r-Spawn-Ei", 20, 4));
         list.add(chargeEgg("spawn_pufferfish", Material.PUFFERFISH_SPAWN_EGG, "Kugelfisch-Spawn-Ei", 12, 2));
         list.add(chargeEgg("spawn_rabbit", Material.RABBIT_SPAWN_EGG, "Hasen-Spawn-Ei", 10, 1));
         list.add(chargeEgg("spawn_salmon", Material.SALMON_SPAWN_EGG, "Lachs-Spawn-Ei", 8, 1));
@@ -703,11 +703,11 @@ public class ShopService {
         list.add(chargeEgg("spawn_squid", Material.SQUID_SPAWN_EGG, "Tintenfisch-Spawn-Ei", 10, 1));
         list.add(chargeEgg("spawn_strider", Material.STRIDER_SPAWN_EGG, "Schreiter-Spawn-Ei", 18, 3));
         list.add(chargeEgg("spawn_tadpole", Material.TADPOLE_SPAWN_EGG, "Kaulquappen-Spawn-Ei", 10, 1));
-        list.add(chargeEgg("spawn_trader_llama", Material.TRADER_LLAMA_SPAWN_EGG, "Händlerlama-Spawn-Ei", 16, 3));
+        list.add(chargeEgg("spawn_trader_llama", Material.TRADER_LLAMA_SPAWN_EGG, "H\u00e4ndlerlama-Spawn-Ei", 16, 3));
         list.add(chargeEgg("spawn_tropical_fish", Material.TROPICAL_FISH_SPAWN_EGG, "Tropenfisch-Spawn-Ei", 10, 1));
-        list.add(chargeEgg("spawn_turtle", Material.TURTLE_SPAWN_EGG, "Schildkröten-Spawn-Ei", 16, 3));
+        list.add(chargeEgg("spawn_turtle", Material.TURTLE_SPAWN_EGG, "Schildkr\u00f6ten-Spawn-Ei", 16, 3));
         list.add(chargeEgg("spawn_villager", Material.VILLAGER_SPAWN_EGG, "Dorfbewohner-Spawn-Ei", 25, 5));
-        list.add(chargeEgg("spawn_wandering_trader", Material.WANDERING_TRADER_SPAWN_EGG, "Fahrender-Händler-Spawn-Ei", 24, 5));
+        list.add(chargeEgg("spawn_wandering_trader", Material.WANDERING_TRADER_SPAWN_EGG, "Fahrender-H\u00e4ndler-Spawn-Ei", 24, 5));
         list.add(chargeEgg("spawn_wolf", Material.WOLF_SPAWN_EGG, "Wolf-Spawn-Ei", 14, 2));
         list.add(chargeEgg("spawn_zombie_horse", Material.ZOMBIE_HORSE_SPAWN_EGG, "Zombiepferd-Spawn-Ei", 30, 5));
         list.add(chargeEgg("spawn_zombie_nautilus", Material.ZOMBIE_NAUTILUS_SPAWN_EGG, "Zombie-Nautilus-Spawn-Ei", 22, 4));

@@ -1,4 +1,4 @@
-package de.mcbesser.challenges.command;
+﻿package de.mcbesser.challenges.command;
 
 import de.mcbesser.challenges.service.MainMenuService;
 import org.bukkit.command.Command;
@@ -17,7 +17,7 @@ public class MainMenuCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Nur Spieler koennen diesen Befehl nutzen.");
+            sender.sendMessage("Nur Spieler k\u00f6nnen diesen Befehl nutzen.");
             return true;
         }
         mainMenuService.openMainMenu((Player) sender);

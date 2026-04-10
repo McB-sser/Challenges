@@ -1,4 +1,4 @@
-package de.mcbesser.challenges.command;
+﻿package de.mcbesser.challenges.command;
 
 import de.mcbesser.challenges.service.ShopService;
 import org.bukkit.command.Command;
@@ -19,7 +19,7 @@ public class ShopCommand implements CommandExecutor {
         if (sender instanceof Player) {
             shopService.openShop((Player) sender);
         } else {
-            sender.sendMessage("Nur Spieler koennen diesen Befehl nutzen.");
+            sender.sendMessage("Nur Spieler k\u00f6nnen diesen Befehl nutzen.");
         }
         return true;
     }

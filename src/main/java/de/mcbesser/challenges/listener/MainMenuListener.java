@@ -1,4 +1,4 @@
-package de.mcbesser.challenges.listener;
+﻿package de.mcbesser.challenges.listener;
 
 import de.mcbesser.challenges.model.ChallengePeriod;
 import de.mcbesser.challenges.service.MainMenuService;
@@ -69,9 +69,9 @@ public class MainMenuListener implements Listener {
 
         boolean skipped = mainMenuService.getChallengeService().skipChallenge(player, period, index);
         if (skipped) {
-            player.sendMessage(ChatColor.YELLOW + "Challenge übersprungen.");
+            player.sendMessage(ChatColor.YELLOW + "Challenge \u00fcbersprungen.");
         } else {
-            player.sendMessage(ChatColor.RED + "Skip nicht möglich.");
+            player.sendMessage(ChatColor.RED + "Skip nicht m\u00f6glich.");
         }
         mainMenuService.openChallengesMenu(player);
     }

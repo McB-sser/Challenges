@@ -1,4 +1,4 @@
-package de.mcbesser.challenges.service;
+﻿package de.mcbesser.challenges.service;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,7 +41,7 @@ public class MenuItemService {
         meta.setDisplayName(ChatColor.GOLD + "Herausforderungs-Hub");
         meta.setLore(List.of(
                 ChatColor.GRAY + "Rechtsklick:",
-                ChatColor.AQUA + "Menü öffnen"
+                ChatColor.AQUA + "Men\u00fc \u00f6ffnen"
         ));
         meta.addEnchant(Enchantment.UNBREAKING, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);

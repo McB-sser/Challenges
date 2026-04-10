@@ -1,4 +1,4 @@
-challengeCounts:
+﻿challengeCounts:
   group1: 5
   group2: 7
   group3: 10
@@ -12,7 +12,7 @@ templates:
   group1:
     break_stone:
       title: "&7Steinbruch"
-      description: "Baue Steinbloecke ab"
+      description: "Ba\u00fc Steinbl\u00f6cke ab"
       type: "MINE_STONE"
       baseTarget: 128
       targetPerTier: 42
@@ -20,8 +20,8 @@ templates:
       tokenPerTier: 2
       skippable: true
     ore_hunt:
-      title: "&bErzjaeger"
-      description: "Finde und baue Erze ab"
+      title: "&bErzj\u00e4ger"
+      description: "Finde und ba\u00fc Erze ab"
       type: "MINE_ORE"
       baseTarget: 18
       targetPerTier: 6
@@ -29,7 +29,7 @@ templates:
       tokenPerTier: 3
       skippable: true
     mob_slayer:
-      title: "&cMobjaeger"
+      title: "&cMobj\u00e4ger"
       description: "Besiege beliebige Mobs"
       type: "KILL_MOB"
       baseTarget: 22
@@ -39,7 +39,7 @@ templates:
       skippable: true
     fisher:
       title: "&9Fischertrupp"
-      description: "Fange Fische und Schaetze"
+      description: "Fange Fische und Sch\u00e4tze"
       type: "FISH"
       baseTarget: 9
       targetPerTier: 3
@@ -48,7 +48,7 @@ templates:
       skippable: true
     crafter:
       title: "&eWerkbank-Legende"
-      description: "Crafte nuetzliche Items"
+      description: "Crafte n\u00fctzliche Items"
       type: "CRAFT"
       baseTarget: 20
       targetPerTier: 7
@@ -57,7 +57,7 @@ templates:
       skippable: true
     breeder:
       title: "&dTierfarm"
-      description: "Zuechte Tiere"
+      description: "Z\u00fcchte Tiere"
       type: "BREED"
       baseTarget: 8
       targetPerTier: 3
@@ -75,7 +75,7 @@ templates:
       skippable: true
     landscaping:
       title: "&2Land- und Gartenbau"
-      description: "Baue Erde ab, setze Bloecke oder pflanze und ernte"
+      description: "Ba\u00fc Erde ab, setze Bl\u00f6cke oder pflanze und ernte"
       type: "LANDSCAPING"
       baseTarget: 40
       targetPerTier: 14
@@ -85,7 +85,7 @@ templates:
   group2:
     long_walk:
       title: "&aErkundungstrupp"
-      description: "Lege Distanz zu Fuss zurueck"
+      description: "Lege Distanz zu Fuss zur\u00fcck"
       type: "WALK_DISTANCE"
       baseTarget: 1400
       targetPerTier: 320
@@ -111,8 +111,8 @@ templates:
       tokenPerTier: 4
       skippable: true
     weekly_ore:
-      title: "&3Tiefenschuerfer"
-      description: "Erzquote fuer diese Gruppe"
+      title: "&3Tiefensch\u00fcrfer"
+      description: "Erzquote f\u00fcr diese Gruppe"
       type: "MINE_ORE"
       baseTarget: 74
       targetPerTier: 22
@@ -147,7 +147,7 @@ templates:
       tokenPerTier: 4
       skippable: true
     weekly_landscaper:
-      title: "&2Gruenflaechen-Team"
+      title: "&2Gr\u00fcnfl\u00e4chen-Team"
       description: "Land- und Gartenarbeit in dieser Gruppe"
       type: "LANDSCAPING"
       baseTarget: 260
@@ -185,7 +185,7 @@ templates:
       skippable: true
     monthly_builder:
       title: "&eBaumeisterpakt"
-      description: "Grosses Ziel fuer Crafting"
+      description: "Grosses Ziel f\u00fcr Crafting"
       type: "CRAFT"
       baseTarget: 900
       targetPerTier: 150
@@ -221,7 +221,7 @@ templates:
       skippable: true
     monthly_merchant:
       title: "&2Handelsdynastie"
-      description: "Regelmaessiger Villager-Handel"
+      description: "Regelm\u00e4ssiger Villager-Handel"
       type: "TRADE_VILLAGER"
       baseTarget: 260
       targetPerTier: 55
@@ -230,7 +230,7 @@ templates:
       skippable: true
     monthly_angler:
       title: "&9Grossfischer"
-      description: "Fange ueber diese Gruppe hinweg"
+      description: "Fange \u00fcber diese Gruppe hinweg"
       type: "FISH"
       baseTarget: 210
       targetPerTier: 48
@@ -248,7 +248,7 @@ templates:
       skippable: true
     monthly_landscaper:
       title: "&2Terra-Architekt"
-      description: "Grosse Ziele fuer Land- und Gartenbau"
+      description: "Grosse Ziele f\u00fcr Land- und Gartenbau"
       type: "LANDSCAPING"
       baseTarget: 1800
       targetPerTier: 320
