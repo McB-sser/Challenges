@@ -1,4 +1,4 @@
-﻿package de.mcbesser.challenges.command;
+package de.mcbesser.challenges.command;
 
 import de.mcbesser.challenges.service.ShopService;
 import org.bukkit.command.Command;

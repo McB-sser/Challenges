@@ -1,4 +1,4 @@
-﻿package de.mcbesser.challenges.service;
+package de.mcbesser.challenges.service;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

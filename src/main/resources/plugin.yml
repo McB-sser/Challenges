@@ -1,6 +1,6 @@
-﻿name: challenges
+name: challenges
 version: 1.0.0
 main: de.mcbesser.challenges.ChallengesPlugin
-api-version: '1.21'
+api-version: '26.1.1'
 authors: [ McB_sser ]
 description: Gruppenbasierte zuf\u00e4llige Herausforderungen mit Token-Shop.

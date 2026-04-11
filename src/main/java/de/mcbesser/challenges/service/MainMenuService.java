@@ -1,4 +1,4 @@
-﻿package de.mcbesser.challenges.service;
+package de.mcbesser.challenges.service;
 
 import de.mcbesser.challenges.model.ChallengePeriod;
 import de.mcbesser.challenges.model.PlayerChallenge;

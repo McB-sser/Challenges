@@ -1,4 +1,4 @@
-﻿package de.mcbesser.challenges.listener;
+package de.mcbesser.challenges.listener;
 
 import de.mcbesser.challenges.model.ChallengePeriod;
 import de.mcbesser.challenges.service.MainMenuService;
