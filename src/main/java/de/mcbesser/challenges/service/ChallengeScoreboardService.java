@@ -24,11 +24,13 @@ public class ChallengeScoreboardService {
 
     private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("dd.MM HH:mm");
     private static final String OBJECTIVE_NAME = "challenges";
+    private static final int PLAYER_REFRESH_BUDGET = 8;
 
     private final JavaPlugin plugin;
     private final ChallengeService challengeService;
     private final MenuItemService menuItemService;
     private BukkitTask refreshTask;
+    private int refreshCursor;
 
     public ChallengeScoreboardService(JavaPlugin plugin, ChallengeService challengeService, MenuItemService menuItemService) {
         this.plugin = plugin;
@@ -40,11 +42,8 @@ public class ChallengeScoreboardService {
         if (refreshTask != null) {
             refreshTask.cancel();
         }
-        refreshTask = plugin.getServer().getScheduler().runTaskTimer(plugin, () -> {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                refresh(player);
-            }
-        }, 1L, 20L);
+        refreshCursor = 0;
+        refreshTask = plugin.getServer().getScheduler().runTaskTimer(plugin, this::refreshOnlinePlayers, 7L, 20L);
     }
 
     public void shutdown() {
@@ -55,6 +54,22 @@ public class ChallengeScoreboardService {
         for (Player player : Bukkit.getOnlinePlayers()) {
             hide(player);
         }
+    }
+
+    private void refreshOnlinePlayers() {
+        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+        if (players.isEmpty()) {
+            refreshCursor = 0;
+            return;
+        }
+        if (refreshCursor >= players.size()) {
+            refreshCursor = 0;
+        }
+        int count = Math.min(players.size(), PLAYER_REFRESH_BUDGET);
+        for (int i = 0; i < count; i++) {
+            refresh(players.get((refreshCursor + i) % players.size()));
+        }
+        refreshCursor = (refreshCursor + count) % players.size();
     }
 
     public void refresh(Player player) {

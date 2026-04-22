@@ -42,6 +42,7 @@ public class ShopService {
     private static final String SHOP_TITLE = ChatColor.GOLD + "Token-Shop";
     private static final String MODULES_TITLE = ChatColor.LIGHT_PURPLE + "Meine Module";
     private static final String EFFECTS_TITLE = ChatColor.AQUA + "Effekte";
+    private static final int MODULE_TICK_INTERVAL_TICKS = 2;
     private static final String COSMETIC_TITLE = ChatColor.LIGHT_PURPLE + "Kosmetik";
     private static final String CRAFTING_TITLE = ChatColor.YELLOW + "Werkb\u00e4nke & Verzauberung";
     private static final String MOBS_TITLE = ChatColor.DARK_GREEN + "Spawn-Eier";
@@ -450,7 +451,7 @@ public class ShopService {
     private void startModuleTicker() {
         moduleTickTask = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             boolean consumeSecond = moduleTickPhase == 0;
-            moduleTickPhase = (moduleTickPhase + 1) % 20;
+            moduleTickPhase = (moduleTickPhase + MODULE_TICK_INTERVAL_TICKS) % 20;
             for (Player player : Bukkit.getOnlinePlayers()) {
                 PlayerProgress progress = challengeService.getProgress(player.getUniqueId());
                 List<String> active = new ArrayList<>(progress.getActiveToggles());
@@ -485,7 +486,7 @@ public class ShopService {
                 }
                 cleanupDepletedModules(progress);
             }
-        }, 1L, 1L);
+        }, 11L, MODULE_TICK_INTERVAL_TICKS);
     }
 
     private boolean hasRemainingUses(PlayerProgress progress, ShopReward reward) {
